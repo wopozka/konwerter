@@ -1,4 +1,4 @@
-Konwerter-0.2.0 
+Konwerter-0.2.2
 
 WSTÊP
 
@@ -204,6 +204,7 @@ WSPIERANE PROGRAMY
 1) ChemDraw z pakietu ChemOffice.
 2) Xfig - program do grafiki wektorowej dla linuksa.
 3) Chemtool - program do rysowania wzorów chemicznych dla linuksa.
+4) BKchem - program do rysowania wzorów chemicznych dla linuksa.
   
 PRZYK£ADOWE U¯YCIE
 
@@ -223,14 +224,16 @@ konwerter -ntl plik.tex    - zamieñ numery na etykiety w plikach eps
 
 etykietuj plik.tex -         j.w.
 
-konwerter -iss plik.tex    - zamieñ etykiety na numerki ignoruj±c wyst±pienia 
+konwerter -is plik.tex    - zamieñ etykiety na numerki ignoruj±c wyst±pienia 
 			     $--set-counter-to
 
 konwerter -if plik.tex	   - zamieñ etykietki na numerki stosuj±c domy¶lny 
 			     styl numeracji dla wszystkich etykiet.
 
+Aby uzyskaæ wiêcej informacji odwied¼ stronê domow± konwertera: 
+http://piti.vsv.pl/konwerter/
 
 AUTOR
-Piotr Wawrzyniak piti@eliksir.ch.pw.edu.pl
+Piotr Wawrzyniak piti@piti.vsv.pl
 W razie pytañ proszê kontaktowaæ siê na powy¿szy adres.
 Mi³ego u¿ytkowania.

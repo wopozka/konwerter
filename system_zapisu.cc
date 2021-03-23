@@ -1,7 +1,7 @@
 
  /***************************************************************************
  *                                                                          * 
- *   Copyright (C) 2005 Piotr Wawrzyniak (piti@eliksir.ch.pw.edu.pl)        *
+ *   Copyright (C) 2005 Piotr Wawrzyniak (piti@piti.vsv.pl                  *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
  *   the Free Software Foundation; either version 2 of the License, or      *
@@ -145,7 +145,7 @@ int r_numerow::int_na_char(int a)
 	    }
 	  else
 	    {
-	      cout<<"Error! Couldn't alocate free memory."<<endl;
+	      cout<<"Error! Couldn't allocate free memory."<<endl;
 	    }
 	  return 1;//B³±d alokacji pamiêci
 	}
@@ -232,7 +232,7 @@ int r_numerow::int_na_char(int a)
 
 int r_numerow::int_na_rom_char(int liczba,int mal_duz)
 {
-  char tablica_liczb_rzymskich[33][5]={"i","ii","iii","iv","v","vi","vii","viii","ix","x","x","xx","xxx","xix","l","lx","lxx","lxxx","xc","c","c","cc","ccc","cd","d","dc","dcc","dccc","cm","m","m","mm","mmm"};
+  char tablica_liczb_rzymskich[33][5]={"i","ii","iii","iv","v","vi","vii","viii","ix","x","x","xx","xxx","xl","l","lx","lxx","lxxx","xc","c","c","cc","ccc","cd","d","dc","dcc","dccc","cm","m","m","mm","mmm"};
 
 
   int ile_cyfr=0;
@@ -252,7 +252,7 @@ int r_numerow::int_na_rom_char(int liczba,int mal_duz)
 	}
       else
 	{
-	  cout<<"Maximal range for roman numbers is 3899. Yours numbers are to high. Sorry dude.";
+	  cout<<"Maximal range for Roman numbers is 3899. Yours numbers are to high. Sorry dude.";
 	}
       return 1;
 
@@ -315,7 +315,7 @@ int r_numerow::int_na_rom_char(int liczba,int mal_duz)
   
     }
 
-
+  //If mal_duz=1 then change small roman number to capital ones
   if (mal_duz==1)
     {
       int unsigned dupa=0;
@@ -399,6 +399,7 @@ while(pomocnicza)
 	  
 }
 
+//If mal_duz=1 then change small letter r to capital ones
  if(mal_duz==1)
    {
      int unsigned dupa=0;

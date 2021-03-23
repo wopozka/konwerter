@@ -1,7 +1,7 @@
 
  /***************************************************************************
  *                                                                          * 
- *   Copyright (C) 2005 Piotr Wawrzyniak (piti@eliksir.ch.pw.edu.pl)        *
+ *   Copyright (C) 2005 Piotr Wawrzyniak (piti@piti.vsv.pl)                 *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
  *   the Free Software Foundation; either version 2 of the License, or      *
@@ -109,7 +109,7 @@ int num_na_etyk(char*nazwa_pliku)
 	}
       else
 	{
-	  cout<<"Couldn;t open "<<nazwa_pliku<<" file for writing."<<endl;
+	  cout<<"Couldn't open "<<nazwa_pliku<<" file for writing."<<endl;
 	}
       return 1;
     }

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2005 Piotr Wawrzyniak (piti@eliksir.ch.pw.edu.pl)
+Copyright (C) 2005 Piotr Wawrzyniak (piti@piti.vsv.pl)
 
 
 Tutaj zawarte s± procedury odpowiedzialne za wczytanie lini z pliku
@@ -75,7 +75,7 @@ int wczytaj_linie(char *linia,int *dlugosc, int DL_WIERSZA, ifstream &czyt)
 	  cout<<"The line is now read. The position in the file: "
 	      <<(czyt.tellg())<<endl
 	      <<"The read line: "<<linia<<endl
-	      <<"End of read line function."<<endl
+	      <<"End of reading line function."<<endl
 	      <<"==========================================";
 	}
     }

@@ -1,7 +1,7 @@
 
  /***************************************************************************
  *                                                                          * 
- *   Copyright (C) 2005 Piotr Wawrzyniak (piti@eliksir.ch.pw.edu.pl)        *
+ *   Copyright (C) 2005 Piotr Wawrzyniak (piti@piti.vsv.pl                  *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
  *   the Free Software Foundation; either version 2 of the License, or      *
@@ -20,6 +20,7 @@ int podaj_etykiete_liczbe(char *, char *, int *);//linia etykieta kolejnosc
 int zwroc_numer_etykiety(kol_etykiet*,char*,kol_etykiet**);
 extern int language;
 extern char polecenie[DL_WIERSZA];
+extern int test;
 
 int operacje_na_tex(char *nazwa_pliku, kol_etykiet*wierzcholek)
 {
@@ -88,7 +89,7 @@ int operacje_na_tex(char *nazwa_pliku, kol_etykiet*wierzcholek)
 		else
 		  {
 		    cout<<"Unknown label in tex file: "<<etykieta<<endl
-			<<"Leave unchanged."<<endl;
+			<<"Leaving unchanged."<<endl;
 		  }
 		plik_tex_wy<<c;
 	      }
@@ -125,10 +126,13 @@ int operacje_na_tex(char *nazwa_pliku, kol_etykiet*wierzcholek)
 
 
 
-plik_tex_we.close();
-plik_tex_wy.close();
+  plik_tex_we.close();
+  plik_tex_wy.close();
 
-  return 0;
+  if(test)
+    unlink(drugi_plik_tex);
+      
+ return 0;
 }
 
 int przeszukaj_linie_tex(char *linia)

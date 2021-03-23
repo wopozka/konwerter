@@ -1,7 +1,7 @@
 
  /***************************************************************************
  *                                                                          * 
- *   Copyright (C) 2005 Piotr Wawrzyniak (piti@eliksir.ch.pw.edu.pl)        *
+ *   Copyright (C) 2005 Piotr Wawrzyniak (piti@piti.vsv.pl                  *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
  *   the Free Software Foundation; either version 2 of the License, or      *
@@ -49,6 +49,7 @@ extern r_numerow klasa_obslugi_etykiet;
 extern int debug_level;
 extern int ignore_set_counter_to;
 extern int language;
+extern int test;
 
 
 //Funkcja przetwarzaj plik zajmuje siê szukaniem etykiet i plików eps w pliku texowym
@@ -106,7 +107,7 @@ int przetwarzaj_plik(char *argv1, /*char *argv2,*/kol_etykiet **wierzcholek)
 	}
       else
 	{
-	  cout<<"Reading mistake"<<endl;
+	  cout<<"Reading error"<<endl;
 	}
       return 1;
     }
@@ -406,9 +407,10 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 
   //Kopiowanie pliku tymczasowego na eps
   //Copying temporary file to eps file.
-
+  
+  if(!test)
   {
-
+    
     //plik_eps.open(nazwa_eps_tymcz);
     ifstream plik_eps(nazwa_eps_tymcz);//otwieram plik tymczasowy do odczytu aby go skopiowaæ na pierwotny eps. Nie sugerowaæ siê nazw± zmiennej.
     if (!plik_eps)
@@ -438,7 +440,7 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 	  }
 	return 1;
       }
-
+    
     int numer_etykiety;
     char przed[DL_WIERSZA];
     char po[DL_WIERSZA];
@@ -487,7 +489,7 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 		  }
 		else
 		  {
-		    cout<<"Checking whitch number has the label. ";
+		    cout<<"Checking which number has the label. ";
 		    cout<<"The data for function calling:"<<endl;
 		    cout<<"*wierzcholek->etykieta: "<<(*wierzcholek)->etykieta<<endl;
 		    cout<<"zmienna_tymczasowa: "<<zmienna_tymczasowa<<endl;
@@ -502,7 +504,7 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 		  }
 		else
 		  {
-		    cout<<"The number is checked and is equal: "<<numer_etykiety<<endl<<endl;
+		    cout<<"The number was checked and is equal: "<<numer_etykiety<<endl<<endl;
 		  }
 	      }
 	    if(przed_etykieta_po('{',c,przed,po,'}')) numer_etykiety=0;//je¶li funkcja zwróci 1 to oznacza b³±d
@@ -541,7 +543,7 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 		      }
 		    else
 		      {
-			cout<<"The folowing line is saved in eps file:"<<endl
+			cout<<"The following line is saved in eps file:"<<endl
 			    <<"przed1: "<<przed<<endl
 			    <<"(*zmienna_tymczasowa)->kolejny_numer_string: "
 			    <<(*zmienna_tymczasowa)->kolejny_numer_string<<endl
@@ -844,7 +846,7 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	    }
 	  else
 	    {
-	      cout<<"There are already labels on the list. Building forward."<<endl;
+	      cout<<"There are already labels in the list. Building forward."<<endl;
 	    }
 	}
       //Lets look if the label exists in global label queue
@@ -857,7 +859,7 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	    }
 	  else
 	    {
-	      cout<<"Looking if the label: "<<rekord->etykieta<<" exists on the lobal label queue."<<endl;
+	      cout<<"Looking if the label: "<<rekord->etykieta<<" exists ini the lobal label queue."<<endl;
 	    }
 	}
       while(strcmp(nowy_element->etykieta,rekord->etykieta)&&nowy_element->nast)
@@ -872,7 +874,7 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 		}
 	      else
 		{
-		  cout<<"Label: "<<rekord->etykieta<<" found on the global label queue. Living function."<<endl;
+		  cout<<"Label: "<<rekord->etykieta<<" found in the global label queue. Leaving function."<<endl;
 		}
 	    }
 	  return 0;
@@ -891,7 +893,7 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	    }
 	  else
 	    {
-	      cout<<"The label: "<<rekord->etykieta<<" not found in the queue. Putting."<<endl;
+	      cout<<"The label: "<<rekord->etykieta<<" not found in the queue. Inserting."<<endl;
 	    }
 	}
       if(!nowy_element->nast)
@@ -961,7 +963,7 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 		      else
 			{
 			  cout<<"****************************************************************"<<endl;
-			  cout<<"The label doesn't exist on the global list.Must be added."<<endl;
+			  cout<<"The label doesn't exist in the global list. Must be added."<<endl;
 			}
 		    }
 		  klasa_obslugi_etykiet.ustaw_zmienna_numer_etykietki(rekord->etykieta);
@@ -1020,8 +1022,8 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 		    {
 		      cout<<"****************************************************************"<<endl;
 		      cout<<"The label looks like blach"<<endl;
-		      cout<<"The label doesn't exist on the global queue. Must be added."<<endl;
-		      cout<<"The number of the label was taking using ustaw_zmienna_numer_etykietki function"<<endl;
+		      cout<<"The label doesn't exist in the global queue. Must be added."<<endl;
+		      cout<<"The number of the label was taken using ustaw_zmienna_numer_etykietki function"<<endl;
 		      cout<<"Here is what klasa_obslugi_etykiet.numer_etykietki looks like: "
 			  <<klasa_obslugi_etykiet.numer_etykietki<<endl;
 		      cout<<"================================================================"<<endl;

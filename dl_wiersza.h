@@ -21,7 +21,7 @@ class kol_etykiet
     for(a=0;a<DL_WIERSZA;a++)
       {
 	kolejny_numer_string[a]='\0';
-	etykieta[a]='\0'  ;
+	etykieta[a]='\0';
 	
       }
   }

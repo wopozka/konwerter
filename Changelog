@@ -1,3 +1,6 @@
+0.2.2
+- Dodana opcja --test która nie zmienia nic, tylko testuje poprawno¶æ etykiet
+- Uaktualnienie emaili i poprawki literówek
 0.2.1
 - Pe³na obs³uga jêzyków. Teraz program mówi albo po polsku albo po angielsku.
 - Uwzglêdnianie zmiennej systemowej LANG.

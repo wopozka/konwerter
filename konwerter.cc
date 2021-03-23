@@ -1,7 +1,7 @@
 
  /***************************************************************************
  *                                                                          * 
- *   Copyright (C) 2005 Piotr Wawrzyniak (piti@eliksir.ch.pw.edu.pl)        *
+ *   Copyright (C) 2005 Piotr Wawrzyniak (piti@piti.vsv.pl)                 *
  *   This program is free software; you can redistribute it and/or modify   *
  *   it under the terms of the GNU General Public License as published by   *
  *   the Free Software Foundation; either version 2 of the License, or      *
@@ -22,8 +22,8 @@
 #include<stdlib.h>
 #include"operacje_na_tex.h"
 #include"system_zapisu.h"
-#define Def_version "0.2.1 (6.03.2005)"
-#define Def_email "piti@eliksir.ch.pw.edu.pl"
+#define Def_version "0.2.2 (21.03.2006)"
+#define Def_email "piti@piti.vsv.pl"
 
 kol_etykiet*wierzcholek;
 
@@ -40,10 +40,12 @@ int saf=1;
 int slf=1;
 int sLf=1;
 int dns=2;
+int test=0;
 int debug_level=0;
 int ignore_set_counter_to=0;
 int ignore_formating=0;
 int help=0;
+int version=0;
 
 void pomoc(); //help function declaration
 
@@ -103,6 +105,10 @@ int main(int argc,char *argv[])
 	  if(!strcmp(argv[i],"--ignore-formating")){ignore_formating=1;czy_znalazlem=1;}
 
 	  if(!strcmp(argv[i],"-h")||!strcmp(argv[i],"--help")){help=1;czy_znalazlem=1;}
+	  
+	  if(!strcmp(argv[i],"-t")||!strcmp(argv[i],"--test")){test=1;czy_znalazlem=1;}
+	  
+	  if(!strcmp(argv[i],"--version")){version=1;czy_znalazlem=1;}
 	  
 	  	  	  	  
 	  //**************************************************************;
@@ -470,7 +476,7 @@ int main(int argc,char *argv[])
 		  else
 		    {
 		      cout<<"If in LaTeX file command is \\nrzw"<<endl
-			  <<"so option -ln must be \\\\nrzw"<<endl;
+			  <<"then option -ln must be \\\\nrzw"<<endl;
 		    }
 		  return 1;
 		}
@@ -506,7 +512,7 @@ int main(int argc,char *argv[])
 		  else
 		    {
 		      cout<<"If in LaTeX file command is \\nrzw"<<endl
-			  <<"so option -ln must be \\\\nrzw"<<endl;
+			  <<"then option -ln must be \\\\nrzw"<<endl;
 		    }
 		  return 1;
 		}
@@ -548,7 +554,7 @@ int main(int argc,char *argv[])
 	return 1;
       }
  
-  if(i>=argc&&!help)
+  if(i>=argc&&!help&&!version)
     {
       if(language==0)
 	cout<<"Brak nazwy pliku"<<endl;
@@ -613,17 +619,37 @@ int main(int argc,char *argv[])
       else
 	{
 	  cout<<"Wrong option -dns or --default-numbering-style parameter "<<endl
-	      <<"Allowed walues are: r, R, a, l, L"<<endl;
+	      <<"Allowed values are: r, R, a, l, L"<<endl;
 	}
       return 1;
     }
 
+  //Maybe you would like to see version?
+  if(version)
+    {
+      cout<<"konwerter "<<Def_version<<endl;
+      return 0;
+    }
 
   //Maybe you nead help if so, give it.
   if(help)
     {
       pomoc();
       return 0;
+    }
+
+  if(numer_czy_etykieta=='e'&&test)
+    {
+      if(language==0)
+	{
+	  cout<<"Opcja -t (--test) nie jest kompatybilna z opcj± -ntl (--numbers-to-labels)"<<endl;
+	}
+      else
+	{
+	  cout<<"Option -t (--test) is not compatible with -ntl (--number-to-latex) option"<<endl;
+	}
+      return 1;
+
     }
 
   klasa_obslugi_etykiet.set_up_all(srf,sRf,saf,slf,sLf,dns);
@@ -672,7 +698,7 @@ int main(int argc,char *argv[])
     }
   else
     {
-     cout<<"Program finished successfuly"<<endl;
+     cout<<"Program finished successfully"<<endl;
     }
   return 0;
 }
@@ -690,7 +716,7 @@ void pomoc()
     cout<<"PROGRAM NIE POSIADA ¿ADNEJ GWARACJI. U¿YWASZ NA W³ASNE RYZYKO."<<endl<<endl;
     cout<<"POLECAM ZROBIENIE KOPII ZAPASOWEJ PLIKU(ÓW) PRZED U¿YCIEM PROGRAMU."<<endl<<endl;
     
-    cout<<"U¿ycie: konwerter/numeruj [opcje] nazwa_pliku_latexowego"<<endl;
+    cout<<"U¿ycie: konwerter/etykietuj [opcje] nazwa_pliku_latexowego"<<endl;
     cout<<"Wspierane opcje [domy¶lne w nawiasach]"<<endl;
     cout<<"-ltn, --labels-to-numbers           zamiana etykiet na liczby [-ltn]"<<endl;
     cout<<"-ntl, --numbers-to-labels           zamiana liczb na etykiety"<<endl
@@ -713,31 +739,34 @@ void pomoc()
     cout<<"-l, --language                      jêzyk komunikatów. Dostêpne parametry"<<endl 
 	<<"                                    [pl] i en. Nieznany parametr traktowany"<<endl
 	<<"                                    jako pl"<<endl;
+    cout<<"-t, --test                          sprawd¼ czy nie ma nieznanych etykiet"<<endl
+	<<"                                    nie zmieniaj plików"<<endl;  
     cout<<"-is, --ignore-switches              zignoruj prze³±czniki %--set-X-to"<<endl;
     cout<<"-if, --ignore-formating             u¿yj dla wszystkich etykiet domy¶lnego"<<endl
 	<<"                                    typu formatowania"<<endl;
     cout<<"-v, --verbose                       wy¶wietlaj du¿o brzydkich komunikatów"<<endl;
+    cout<<"--version                           wy¶wietl wersjê i zakoñcz"<<endl;
     cout<<"-h, --help                          to co teraz czytasz"<<endl;
     cout<<"Type \"konwerter -l en -h\" for help in English."<<endl;
   }
   else
     {
       cout<<endl;
-      cout<<"Automatic conwersion labels in LaTeX and EPS files to numbers."<<endl;
+      cout<<"Automatic conversion labels in LaTeX and EPS files to numbers."<<endl;
       cout<<"Version "<<Def_version<<". Written by Piotr Wawrzyniak."<<endl<<endl;
-      cout<<"If you like this program, or have any sugestions please sent me an e-mail to:"<<endl;
+      cout<<"If you like this program, or have any suggestions please sent me an e-mail to:"<<endl;
       cout<<Def_email<<endl<<endl;
       cout<<"Program spreads under conditions of GPL (see www.gnu.org)."<<endl<<endl;
       cout<<"THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!"<<endl<<endl;
       cout<<"IT IS GOOD IDEA TO DO COPY OF ALL FILES BEFORE USE."<<endl<<endl;
-      cout<<"Usage: konwerter/numeruj [options] LaTeX_filename"<<endl;
+      cout<<"Usage: konwerter/etykietuj [options] LaTeX_filename"<<endl;
       cout<<"Supported  options [default in brackets]:"<<endl;
       cout<<"-ltn, --labels-to-numbers           change labels to numbers [-n]"<<endl;
       cout<<"-ntl, --numbers-to-labels           change numbers to labels"<<endl
 	  <<"                                    (only in eps files)"<<endl;
-      cout<<"-srf n, --start-roman-from n        start number with small roman"<<endl
+      cout<<"-srf n, --start-roman-from n        start number with small Roman"<<endl
 	  <<"                                    numbers from n [-srf 1]"<<endl;
-      cout<<"-sRf n, --start-Roman-from n        start number with capital roman"<<endl
+      cout<<"-sRf n, --start-Roman-from n        start number with capital Roman"<<endl
 	  <<"                                    numbers from n [-sRf 1]"<<endl;
       cout<<"-saf n, --start-arabic-from n       start number with arabic numbers"<<endl
 	  <<"                                    from n [-saf 1]"<<endl;
@@ -746,17 +775,20 @@ void pomoc()
       cout<<"-sLf n, --start-Letter-from n       start number with capital letters"<<endl 
 	  <<"                                    from n [-rLf 1]"<<endl;
       cout<<"-dns n, --default-numbering-style n set default number style. Possible"<<endl
-	  <<"                                    walues: r, R, a, l, L  [-dns a]"<<endl;
+	  <<"                                    values: r, R, a, l, L  [-dns a]"<<endl;
       cout<<"-ln, --label-name                   LaTeX command for numbers inserting"<<endl
 	  <<"                                    [\\nrzw]. There must be always 2"<<endl
 	  <<"                                    backslashes ie. -ln \\\\xyz"<<endl;
       cout<<"-l, --language                      set language. There are 2 possible"<<endl
 	  <<"                                    parameters: [pl] and en. Unknown"<<endl
 	  <<"                                    parameter is handle as pl"<<endl;
+      cout<<"-t, --test                          test if there are unknown labels"<<endl
+	  <<"                                    and do not change files"<<endl;
       cout<<"-is, --ignore-switches              ignore switches %--set-X-to"<<endl;
       cout<<"-if, --ignore-formating             use for all labels default number"<<endl
 	  <<"                                    style"<<endl;
       cout<<"-v, --verbose                       be verbose"<<endl;
+      cout<<"--version                           print version and exit"<<endl;
       cout<<"-h, --help                          short help"<<endl;
       cout<<"Wpisz \"konwerter -l pl -h\" po pomoc po polsku."<<endl;
     }

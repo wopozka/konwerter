@@ -1,4 +1,4 @@
-Konwerter-0.2.1
+Konwerter-0.2.2
 
 INTRODUCTION
 
@@ -150,7 +150,7 @@ konwerter program will search the labels in file filename.
 
   It is worth to notice, that the file filename, doesn't need to be
 real eps file. It can be any text file containing the labels prepared
-as above writen. It allows us, to not straightway controlling of numbers.
+as above written. It allows us, to not straightway controlling of numbers.
 
   To call the label in the tex file, the special command should be
 made (the \newcommand command). By default it is \nrzw{label}, but this can
@@ -218,10 +218,11 @@ the konwerter will speak in polish, otherwise English will be used as default.
   Type konwerter -l en -h to see the possible parameters with short characteristic.
 
 COMPATIBILITY LIST
-The konwerter is knonw to work with eps files produced by:
+The konwerter is known to work with eps files produced by:
 1) ChemDraw from ChemOffice package
 2) Xfig - vector drawing program for linux
-3) chemtool - chemical drawing software for linux.
+3) chemtool - chemical drawing software for linux
+4) BKchem - chemical drawing software for linux.
 
 EXAMPLES
 
@@ -240,15 +241,17 @@ konwerter -ntl plik.tex    - change numbers to labels in eps files mentioned
 
 etykietuj plik.tex -         the same as above
 
-konwerter -iss plik.tex    - change labels to numbers in plik.tex file
+konwerter -is plik.tex    - change labels to numbers in plik.tex file
  			     ignoring $--set-counter-to switch
 
 konwerter -if plik.tex	   - change labels to numbers using default
 			     numbering style for all labels. This
                              command ignores :r, :R, :a, :l, :L
 			     switches
+
+For more information visit konwerter webpage: http://piti.vsv.pl/konwerter/
 			     
 AUTHOR
-Piotr Wawrzyniak piti@eliksir.ch.pw.edu.pl
+Piotr Wawrzyniak piti@piti.vsv.pl
 In case of any questions please contact using above address.
 I wish you nice using.

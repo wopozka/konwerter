@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2004 Piotr Wawrzyniak (piti@eliksir.ch.pw.edu.pl)
+Copyright (C) 2004 Piotr Wawrzyniak (piti@piti.vsv.pl)
 
 Plik zawiera definicjê klasy przechowuj±cej informacje i funkcje, 
 które bêd± definiowa³y odpowiednie numerowanie
