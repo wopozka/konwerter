@@ -1,25 +1,26 @@
-Konwerter-0.2.2
+Konwerter-0.2.4
 
 INTRODUCTION
 
-Often, writing longer texts using wonderful high-quality typesetting
+Quite often during writing longer texts using a wonderful high-quality typesetting
 program called LaTeX, there appears necessity to include pictures
-contained objects, that should be numbered and should be called them in
-the text using also numbers. Such a situation is typical for chemical
-publications, that contain many chemical schemes with many compounds
-on every of them. Up to now, the author of publication had to number
-every object manually, that was both time consuming and unpleasant
-work. Consider what would happened, if at the end of writing it was
-necessary to add at the beginning of the document, any new scheme. It
-was necessary to renumber all others schemes.
+containing objects which should be numbered and additionally, should be called (reffered) in
+the text using these numbers. Such a situation is typical for chemical
+publications, which contain many chemical schemes with many compounds
+in every of them. Up to now, the author of the publication had to number
+every object (formula) manually which was both time consuming and unpleasant
+work. Consider, what would happened if at the end of writing it is
+necessary to add a new compound just at the beginning of a document. If you are
+lucky you can add any letter index at the number, but in the worst case you 
+have to renumber all the schemes.
 
-The konwerter program solves that problem. Using it, one doesn't need
-to number any object in graphics anymore, one just give them a names 
-called labels. Also in the text the labels are used instead of
-numbers. When the text is ready, the start-up of the konwerter program
-will just replace all labels with proper numbers both in the graphic and
-text. The numbers depends on the order of labels in graphic files. The
-label that appeared earlier will have lover number. User has
+The konwerter program solves this problem. Using it one doesn't 
+number any object in graphics anymore, but gives them names
+called labels. These labels are used instead of numbers, both in a text 
+and in figures. When the text is ready, the start-up of the konwerter program
+on the main tex file will just replace all labels with proper numbers both in 
+the graphics and in the text. The numbers order depends on the order of labels in 
+the graphic files. The label which appeared earlier will have lower number. User has a
 possibility to use five types of numbering:
 - Arabic numbers
 - small Roman numbers
@@ -27,13 +28,14 @@ possibility to use five types of numbering:
 - small letters
 - capital letters
 
-All these types of number, can be used at the same time in the
-document. Additionally there can appeared letter indexes for example:
-1a, 2b, 3a etc, but they are not seted automatically. What is the
-index decides author, making the label in special way.
+All these types of numbers can be used at the same time in a
+document. Additionally there can appeared letter indexes (e.g.
+1a, 2b, 3a etc) but they are not set automatically. This is author 
+who decides how the index looks like by creating the label in a
+special way.
 
-The converter program supports only graphics in eps file. See
-compatibility list.
+The converter program supports only graphics in eps format. See
+the compatibility list.
 
 WHAT IS NECESSARY FOR COMPILATION
 
@@ -42,7 +44,7 @@ g++ in version 3.0 or higher
 
 COMPILATION
 
-  Compilation doesn't differ from a typical compilation for unix
+Compilation doesn't differ from a typical compilation for the unix
 systems. The first step is the edition of Makefile, in which one must
 set the DESTDIR variable. This variable shows where will the program
 be installed. By default it is /usr/local/bin and that is the place
@@ -55,112 +57,112 @@ require the superuser privileges):
 
 HOW DOES IT WORK
 
-The konwerter program reads the tex file, and looks there graphics in
-eps format. When any is found, the next step is to look for any labels
-in it. The labels are queued, and then changed to numbers. The second
-step of working, is to replace all labels in tex file. After finishing
-of work, user will be given a file name.tex.auto.tex that should be
-compiled with LaTeX once again. After that the dvi file is produced,
-in which all labels are already replaced with numbers both in text and
-graphics. It is necessary to know, that during label changing process,
+The konwerter program reads the tex file and searches there for graphics in
+the eps format. When any is found the next step is to look for any labels
+in the eps file. The labels are queued in a special quie and then changed to numbers. 
+The second step of working is to replace all labels in a tex file. As a result
+of work a new file name.tex.auto.tex will be produced, which should be
+compiled with LaTeX once again. After that the dvi file is formed
+in which all labels are already replaced with numbers both in the text and
+graphics. It is necessary to know that during label changing process
 the eps files are also changed (the tex file stays unchanged). One can
-restore the original eps files, running the konwerter with the proper
+restore the original eps files by running the konwerter with the proper
 option on the original tex file. 
 
 *********************************************************************
 IT IS STRONGLY RECOMMENDED TO DO A BACKUP COPY OF ALL FILES BEFORE THE
-USAGE OF KONWERTER PROGRAM.
+USAGE OF THE KONWERTER PROGRAM.
 *********************************************************************
 
 PROGRAM USAGE
 
-  Proper working of the konwerter program needs existence in the eps
-file the special constructed labels. The labels can contain any
-letters belonging to the English alphabet and the numbers. The underline
-"_" is not allowed, because it is special character for LaTeX. 
-The dot, semicolon and colon are also not allowed because they
-have some special meaning for konwerter. The label can have up to 
-200 letters.
+The konwerter program needs a special constructed labels in eps
+files. The labels can contain any letters from the English 
+alphabet and the numbers. The underline "_" is not allowed because 
+it is special character for LaTeX. The dot, semicolon and colon are 
+also not allowed because they have some special meaning for konwerter. 
+The label can have up to 200 letters.
 
-  Every label should start from the construction that controls a way
-of numbering. The leak of the construction, causes that the label will
-be numbered in default style. There exist five controlling
-constructions.
+Each label may start from a construction which controls a way
+of numbering. The lack of this construction will result in default numbering
+style. There exist five controlling constructions.
 :r - small Roman numbers
 :R - big Roman numbers
 :a - Arabic numbers
 :l - small letters
 :L - big letters
 
-  Quite often chemist use the letter indexes with numbers for example:
+Quite often chemists use letter indexes with numbers for example:
 1a, 1b, 1c etc. The konwerter program also helps the author to make
-such a numbers. To get such a result, that is enough, to add the dot,
-at the end of label, and next a letter that should be added. It is not
-allowed to put two letters after the dot, because the program will not
+above numbers. To get such a result it is enough to add the dot
+at the end of label and then a letter. It is not allowed to put two 
+letters after the dot because the program will not
 recognize it as an index.
 
 THE EPS FILES PREPARING
 
-  In the eps file, every object that should be numbered, should be
+In the eps file every object to be numbered should be
 labeled in the following way:
 
 ?et{label_name;number}
 
 - label_name - any label prepared in the way described above
 - number - any number higher than zero. The existence of this
-parameter parameter needs small explanation. The eps files are readed
-line by line. Because of that labels can appeared in not proper
-order. To prevent that the number is necessary. When the konwerter
-program will find two labels ?et{label1;1} and ?et{label2;2} it will
-just know, that label1 should have lover number that label2. The
-author of the eps file, know the order, the program doesn't, so it
-needs these numbers. If you forget to add the number, automatically
-it will set to 0. The numbers can repeat oneself, but it will cause the
-mistakes during numbering. A few example of proper labels are below:
+parameter needs small explanation. The eps files are red
+by konwerter line by line. Because of that the labels can appeared not in
+a proper order. To prevent such a situation each label in the eps should 
+conain this number. When the konwerter program finds two labels 
+?et{label1;1} and ?et{label2;2} it will just know, that label1 should have 
+lower number that label2. The author of the eps file knows the order, the program 
+doesn't - therefore it needs these parameters. If you forget to add the number, 
+it will be set to 0 automatically. Please avoid putting two the same numbers 
+in one figure (they can be the same in different figures) because it will 
+results in errors during numbering. A few example of the proper labels are presented below: 
 ?et{benzene;1} - the default numbering style will be used
 ?et{:Rbenzene;2} -the big Roman numbering style will be used
 ?et{:rbenzene;3} - the small Roman numbering style will be used
 ?et{:rbenzene.a;4} - the same number as above will be used, but
-		    additionally index a will be given 
+		    additionally the index 'a' will be given 
 		    for example: iva.
 ?et{hexane.a;5} - the default numbering style will be used, and
-                 additionally the index a will be used for example: 2a
+                 additionally the index 'a' will be used, for example: 2a
                  or 4a.
 
-  It is important to remember, that the labels :Rbenzene and :benzene
-are totally different, and they will be given different
-number. Additionally in case such 2 labels: ?et{hexane.a;1} and
-?et{hexane;2} in one or in many eps files, both labels will be given
-the same number, but additionally the first will be given the a
-index. In this case it will be as follows: 2a and 2.
+It is important to remember that the labels: :Rbenzene and :benzene
+are totally different and they will receive different
+number. Additionally, in case of such 2 labels: ?et{hexane.a;1} and
+?et{hexane;2} both labels will receive the same number, but the first one will 
+recive the 'a' index. In this case it will be as follows: 2a and 2.
 
 THE LaTeX FILES
-  
-  The tex files also need a proper handling. Because not all eps files
-contain labels, and because in LaTeX doesn't exist one general method
+
+The tex files also need a proper handling. Because not all the eps files
+contain labels and because in LaTeX doesn't exist one general method
 for pictures including, the konwerter program searches in the tex
-code, the instruction that tells to it, in which file the labels
-should be searched. The construction looks as below:
+code for the instruction which tells  in which file the labels
+should be searched for. To inform the konwerter where are labels below 
+construction should be used:
 
 %?plik{filename}
 
-  As one can see, that is comment in LaTeX file. The instruction
-should always start from the new line. After finding such a line, the
-konwerter program will search the labels in file filename.
+As one can see this is a comment in LaTeX file. The construction
+should always start from a new line. After konwerter finds such a line it
+will search for the labels in file called filename.
 
-  It is worth to notice, that the file filename, doesn't need to be
+It is worth to notice that the file named 'filename' doesn't need to be a
 real eps file. It can be any text file containing the labels prepared
-as above written. It allows us, to not straightway controlling of numbers.
+as above written. 
 
-  To call the label in the tex file, the special command should be
-made (the \newcommand command). By default it is \nrzw{label}, but this can
-be changed, using the command line parameter. The \nrzw{label}
-construction, doesn't need to start from the beginning of the line, it
-can be placed in any place. It allows us, to write without thinking
-where the line should be break (that is finally TeX business). The label
-should be the same as in eps file, after semicolon and the number
-removing. Let us consider below example. If in the eps file below
-labels are present:
+To call the label in the tex file, the special command should be
+created (the \newcommand command). By default it is \nrzw{label}, but this can
+be changed using the command line parameter. The \nrzw{label}
+construction doesn't need to start from the beginning of the line, it
+can be placed at any position. It allows us to write without thinking
+where the line should be broken (that is finally TeX business). The label
+should be the same as in eps file after semicolon and the number
+removing. Let us consider below example. 
+
+If in the eps file below labels are present:
 
 ?et{benzene.a;1}
 ?et{:Rtoluene;2}
@@ -169,53 +171,57 @@ labels are present:
 
 in the tex file we should place:  \nrzw{benzene.a},
 \nrzw{:Rtoluene},\nrzw{:rxylene}, \nrzw{benzene.b}. If additionally in
-the tex file, we placed \nrzw{benzene}, it also will be given a number
-- the same as for the benzene.b label. That is the result of program
+the tex file we placed \nrzw{benzene} it also will be given a number
+- the same as for the 'benzene.b'. That is the result of program
 project, and according to the author, that is correct.
 
-  After processing is ready, a new file filename.tex.auto.tex is 
-produced,in which above labels will be changed to: \nrzw{3} reacts with
-\nrzw{4} giving .... The filename.tex.auto.tex should be once again
-compiled with LaTeX to get dvi file.
+After processing is done a new file filename.tex.auto.tex is 
+produced, in which all the above labels will be changed to numbers.
+The filename.tex.auto.tex should be once again compiled with LaTeX to get dvi file.
 
-  The konwerter program, changes also labels to numbers in eps
-file. To restore the original eps files format, run the konwerter with
-the -ntl option, or using name etykietuj on the filename.tex file.
+The konwerter program changes also labels to numbers in eps
+file. To restore the original eps files  run the konwerter with
+the -ntl option, or using name etykietuj on the main tex file.
 
-  The konwerter program recognizes the LaTeX command \input{}, what
+ The konwerter program recognizes the LaTeX \input{} command which
 allows us to process documents that contained many files.
 
-  It is sometimes necessary, to start numbering from the beginning
-starting from some part of the text (for example in the new
+It is sometimes necessary to start numbering from the beginning
+for some part of the text (for example in the new
 chapter). The konwerter program supports such a situation. To get such
-result, that is enough to include in tex file, one of the below
+result it is enough to include in tex file one of the below
 instruction:
+
 %--set-r-to a
 %--set-R-to a
 %--set-a-to a
 %--set-l-to a
 %--set-L-to a
-  These commands results in setting the counter for small Roman number,
+
+These commands results in setting the counter for small Roman number,
 capital Roman numbers, Arabic numbers, small letters and capital
-letters to the number a. The a, should be a number for any of
-type. These command should start from the new line.
+letters to the number a. The a, should be a number for each of
+the numbering style. These command should start from the new line.
 Examples:
 %--set-R-to 12 - setting the counter for capital Roman numbers to 12
 %--set-a-to 21 - setting the counter for Arabic numbers to 21
-  It could be sometimes useful to use another numbering style in new chapter.
+
+It could be sometimes useful to use another numbering style in a new chapter.
 The konwerter program supports also this feature. It is enough to place in the
 tex file below command:
 %--set-d-to K, 
 where K could be: r, R, a, l, L. Beginning from this line, the default numbering
-style for new labels will be as seted. 
-  It is worth to notice, that the new settings, given by above commands, will
-concern only new labels. Old one, will have the same numbers.
+style for new labels will be set to K. 
+
+It is worth to notice that the new settings, given by above commands, will
+concern only new labels. The old ones will have the same numbers.
 
 THE LANGUAGE AND THE COMMAND LINE PARAMETERS
-  The konwerter program supports at present two languages: English (default) and
+
+The konwerter program supports at present two languages: English (default) and
 Polish. It also recognizes the LANG environment variable. If it is set to pl_PL,
 the konwerter will speak in polish, otherwise English will be used as default.
-  Type konwerter -l en -h to see the possible parameters with short characteristic.
+Type konwerter -l en -h to see the possible parameters with short characteristic.
 
 COMPATIBILITY LIST
 The konwerter is known to work with eps files produced by:
@@ -226,8 +232,8 @@ The konwerter is known to work with eps files produced by:
 
 EXAMPLES
 
-  The program konwerter recognizes he name using which it was called.
- The konwerter name is equal to the  -ltn parameter, and the etykietuj
+The program konwerter recognizes the name using which it was run.
+The konwerter name is equal to the  -ltn parameter, and the etykietuj
 name is equal to the -ntl parameter. 
 
 konwerter -dns R  plik.tex - change labels to numbers in plik.tex file
@@ -249,9 +255,9 @@ konwerter -if plik.tex	   - change labels to numbers using default
                              command ignores :r, :R, :a, :l, :L
 			     switches
 
-For more information visit konwerter webpage: http://piti.vsv.pl/konwerter/
+For more information visit konwerter webpage: http://konwerter.exroot.org
 			     
 AUTHOR
-Piotr Wawrzyniak piti@piti.vsv.pl
+Piotr Wawrzyniak wopozka@gmail.com
 In case of any questions please contact using above address.
-I wish you nice using.
+Have a fun and enjoy my program.

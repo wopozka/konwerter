@@ -124,6 +124,9 @@ int przeszukaj_linie(char *linia,char *nazwa_pliku,ifstream &czyt)
   char polecenie[]="?plik";//definiuje nazwê polecenia do znalezienia
   char polecenie2[]="input{";//definiuje nzawê do znalezienia
   int a;// zero je¶li uda³o siê skopiowaæ string
+  while(isblank(*linia))
+    linia++;
+   
   if (*linia=='%')
     { //2
       linia++;

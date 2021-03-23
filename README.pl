@@ -1,4 +1,4 @@
-Konwerter-0.2.2
+Konwerter-0.2.4
 
 WSTÊP
 
