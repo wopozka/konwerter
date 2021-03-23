@@ -1,213 +1,254 @@
-Konwerter-0.2.0 
+Konwerter-0.2.1
 
-WSTÊP
+INTRODUCTION
 
-  Niejednokrotnie pisz±c d³u¿sze teksty przy wykorzystaniu doskona³ego
-systemu sk³adu tekstu, którym jest LaTeX, pojawia³a siê potrzeba dodania
-do tekstu rysunków, zawieraj±cych obiekty, które wymaga³y odwo³ywania siê 
-do nich w tek¶cie dokumentu poprzez numerek. Wi±za³o siê to z konieczno¶ci± 
-rêcznego ich numerowania, gdy¿ LaTeX, nie posiada mechanizmu 
-umo¿liwiaj±cego zautomatyzowanie tej czynno¶ci. Taka metoda pracy
-powodowa³a, ¿e ka¿de dodanie nowego obrazka poci±ga³o za sob± konieczno¶æ
-przenumerowywania wszystkich pozosta³ych. Przysparza³o to autorowi
-du¿o pracy, oraz by³o bardzo czasoch³onnym zajêciem. 
+Often, writing longer texts using wonderful high-quality typesetting
+program called LaTeX, there appears necessity to include pictures
+contained objects, that should be numbered and should be called them in
+the text using also numbers. Such a situation is typical for chemical
+publications, that contain many chemical schemes with many compounds
+on every of them. Up to now, the author of publication had to number
+every object manually, that was both time consuming and unpleasant
+work. Consider what would happened, if at the end of writing it was
+necessary to add at the beginning of the document, any new scheme. It
+was necessary to renumber all others schemes.
 
-  Program konwerter rozwi±zuje ten problem. U¿ywaj±c go, nie numerujesz
-obiektów na obrazkach, tylko je nazywasz. Równie¿ w tek¶cie odnosisz siê
-do nich poprzez nazwê. Gdy tekst jest gotowy, uruchomienie programu
-konwerter spowoduje zamianê nazw (zwanych dalej etykietkami) na numerki,
-zarówno w plikach eps, jak i w tek¶cie. Numery s± nadawane w zale¿no¶ci 
-od kolejno¶ci pojawiania siê w plikach eps, a do dyspozycji u¿ytkownik
-ma 5 typów numeracji: 
-- cyfry arabskie
-- cyfry rzymskie ma³e
-- cyfry rzymskie wielkie
-- literki ma³e
-- literki wielkie
+The konwerter program solves that problem. Using it, one doesn't need
+to number any object in graphics anymore, one just give them a names 
+called labels. Also in the text the labels are used instead of
+numbers. When the text is ready, the start-up of the konwerter program
+will just replace all labels with proper numbers both in the graphic and
+text. The numbers depends on the order of labels in graphic files. The
+label that appeared earlier will have lover number. User has
+possibility to use five types of numbering:
+- Arabic numbers
+- small Roman numbers
+- capital Roman numbers
+- small letters
+- capital letters
 
-  Wszystkie te typy numeracji, mo¿na jednocze¶nie u¿ywaæ w jednym dokumencie.
-Dodatkowo mog± siê pojawiæ indeksy literowe na przyk³ad: 1a, 2b, Ia itd, 
-lecz nie s± one ustawiane automatycznie. O tym co bêdzie indeksem, decyduje
-autor tekstu.
+All these types of number, can be used at the same time in the
+document. Additionally there can appeared letter indexes for example:
+1a, 2b, 3a etc, but they are not seted automatically. What is the
+index decides author, making the label in special way.
 
-WYMAGANIA DO KOMPILACJI
+The converter program supports only graphics in eps file. See
+compatibility list.
+
+WHAT IS NECESSARY FOR COMPILATION
 
 GNU make
-g++ w wersji 3.0 i wy¿szej
+g++ in version 3.0 or higher
 
-KOMPILACJA
+COMPILATION
 
-  Kompilacja wygl±da identycznie jak dla wszystkich systemów uniksowych. 
-Pierwszym etapem bêdzie edycja pliku Makefile, w którym nale¿y ustawiæ
-zmienn± DESTDIR na katalog, do którego chcemy zainstalowaæ program.
-Domy¶lnie jest to /usr/local/bin i je¶li nic nie zmienimy, to tam 
-w³a¶nie program zostanie zainstalowany. Po edycji nale¿y skompilowaæ
-zainstalowaæ program przy pomocy poni¿szych komend  (druga komenda, 
-w zale¿no¶ci od DESTDIR, mo¿e wymagaæ uprawnieñ superu¿ytkownika):
+  Compilation doesn't differ from a typical compilation for unix
+systems. The first step is the edition of Makefile, in which one must
+set the DESTDIR variable. This variable shows where will the program
+be installed. By default it is /usr/local/bin and that is the place
+the program will be installed. After edition, the program should be 
+compiled and installed using below commands (the second one, may 
+require the superuser privileges):
 
 1. make
 2. make install
 
-DZIA£ANIE
+HOW DOES IT WORK
 
-  Program czyta plik tex, w poszukiwaniu grafik eps. W razie znalezienia 
-takowej, jest ona przeszukiwana w celu znalezienia etykiet. Etykiety te 
-s± kolejkowane, a nastêpnie zamieniane na numerki. Drugim etapem jest zamiana 
-etykiet w pliku texowym. U¿ytkownik jako wynik dostaje plik nazwa.tex.auto, 
-który trzeba ponownie skompilowaæ latexem. Po tej operacji dostajemy plik 
-wynikowy dvi, w którym etykiety powinny byæ ju¿ pozamieniane na numerki, 
-zarówno w plikach eps, jak i w pliku tex. Nale¿y zauwa¿yæ, ¿e o ile oryginalny
-plik tex, nie jest zmieniany, o tyle pliki eps tak. Mo¿na bez problemu 
-przywróciæ oryginaln± formê plikom eps, uruchamiaj±c konwerter z odpowiedni± 
-opcj± na oryginalnym pliku tex.
+The konwerter program reads the tex file, and looks there graphics in
+eps format. When any is found, the next step is to look for any labels
+in it. The labels are queued, and then changed to numbers. The second
+step of working, is to replace all labels in tex file. After finishing
+of work, user will be given a file name.tex.auto.tex that should be
+compiled with LaTeX once again. After that the dvi file is produced,
+in which all labels are already replaced with numbers both in text and
+graphics. It is necessary to know, that during label changing process,
+the eps files are also changed (the tex file stays unchanged). One can
+restore the original eps files, running the konwerter with the proper
+option on the original tex file. 
 
-U¯YCIE PROGRAMU
+*********************************************************************
+IT IS STRONGLY RECOMMENDED TO DO A BACKUP COPY OF ALL FILES BEFORE THE
+USAGE OF KONWERTER PROGRAM.
+*********************************************************************
 
-  Prawid³owe dzia³anie programu wymaga pojawienia siê w plikach eps odpowiednio
-zbudowanych etykiet. Mog± one zawieraæ dowolne litery jêzyka angielskiego, 
-cyfry oraz znak podkre¶lenia. Niedozwolone jest u¿ycie kropki, ¶rednika 
-i dwukropka gdy¿ s± one wykorzystywane w innym celu. Nie powinno równie¿
-powodowaæ b³êdów u¿ycie polskich liter lecz nie jest to zalecane. 
-Etykieta mo¿e mieæ do 200 znaków.
+PROGRAM USAGE
 
-  Ka¿da etykieta powinna siê zaczynaæ konstrukcj± steruj±c±, informuj±c± 
-o sposobie jej numerowania. Brak takiej konstrukcji, powoduje ¿e etykieta 
-zostaje automatycznie ponumerowana w sposób domy¶lny. Istnieje piêæ 
-konstrukcji steruj±cych: 
-:r - ma³e liczby rzymskie 
-:R - wielkie liczby rzymskie 
-:a - liczby arabskie
-:l - ma³e literki
-:L - du¿e literki
-  Czêsto stosowan± metod± numerowania jest dodawanie indeksów literowych do 
-liczb np. 1a, 1b, 1c itd. Konwerter równie¿ w znacznym stopniu pomaga tworzyæ
-takie numerki. Aby to uzyskaæ, wystarczy ¿e do etykietki dodasz na koñcu kropkê,
-a po kropce literê, która tam powinna siê znale¼æ. Niedozwolone jest
-wystêpowanie po kropce dwóch znaków, gdy¿ wtedy program nie potraktuje
-tego jako indeksu literowego.
+  Proper working of the konwerter program needs existence in the eps
+file the special constructed labels. The labels can contain any
+letters belonging to the English alphabet and the numbers. The underline
+"_" is not allowed, because it is special character for LaTeX. 
+The dot, semicolon and colon are also not allowed because they
+have some special meaning for konwerter. The label can have up to 
+200 letters.
 
-PRZYGOTOWANIE PLIKÓW EPS:
+  Every label should start from the construction that controls a way
+of numbering. The leak of the construction, causes that the label will
+be numbered in default style. There exist five controlling
+constructions.
+:r - small Roman numbers
+:R - big Roman numbers
+:a - Arabic numbers
+:l - small letters
+:L - big letters
 
-  W schemacie ka¿dy obiekt podpisujemy etykiet± w nastêpuj±cy sposób:
+  Quite often chemist use the letter indexes with numbers for example:
+1a, 1b, 1c etc. The konwerter program also helps the author to make
+such a numbers. To get such a result, that is enough, to add the dot,
+at the end of label, and next a letter that should be added. It is not
+allowed to put two letters after the dot, because the program will not
+recognize it as an index.
 
-?et{etykieta;numer}
+THE EPS FILES PREPARING
 
-- etykieta - dowolna etykieta stworzona wed³ug opisu powy¿ej;
-- numer-(dowolna liczba wiêksza od zera).
-  Poniewa¿ plik eps jest czytany sekwencyjnie i etykiety niekoniecznie 
-bêd± siê pojawiaæ w odpowiedniej kolejno¶ci, konieczne jest ich ponumerowanie
-w pliku eps. Dziêki temu zostanie zachowana odpowiednia kolejno¶æ.
-Numery nie musz± byæ kolejnymi liczbami. Brak numeru spowoduje b³êdne 
-numerowanie etykiet. Numery mog± siê powtarzaæ ale równie¿ mo¿e to spowodowaæ
-b³êdy.
-Przyk³ad u¿ycia
-?et{benzen;1} - u¿yty zostanie domy¶lny styl numerowania
-?et{:Rbenzen;2} - u¿yty zostanie styl numerowania wielkimi liczbami rzymskimi
-?et{:rbenzen;3} - u¿yty zostanie styl numerowania ma³ymi liczbami rzymskimi
-?et{:rbenzen.a;4} - u¿yty zostanie ten sam numer co dla etykiety powy¿szej
- 		    lecz, dodatkowo zostanie dodana literka a np. ia, iia itd.
-?et{heksan.a;5} - u¿yty zostanie domy¶lny styl numerowania i dodatkowo przy 
-		  numerku pojawi siê literka a np. 2a, 2b
+  In the eps file, every object that should be numbered, should be
+labeled in the following way:
 
-  Wa¿ne jest aby pamiêtaæ, ¿e dla programu etykiety :Rbenzen oraz :rbenzen to 
-dwie ró¿ne etykiety i bêd± im przydzielone ró¿ne numerki, oraz ¿e w przypadku
-pojawienia siê etykiet ?et{heksan.a;1} i ?et{heksan;2} w jednym b±d¼ wielu 
-pliku eps,  obie dostan± ten sam numerek, tyle ¿e pierwsza dodatkowo indeks 
-a - czyli w tym przypadku bêdzie to: 2a i 2.
+?et{label_name;number}
 
-PLIKI LaTeX
+- label_name - any label prepared in the way described above
+- number - any number higher than zero. The existence of this
+parameter parameter needs small explanation. The eps files are readed
+line by line. Because of that labels can appeared in not proper
+order. To prevent that the number is necessary. When the konwerter
+program will find two labels ?et{label1;1} and ?et{label2;2} it will
+just know, that label1 should have lover number that label2. The
+author of the eps file, know the order, the program doesn't, so it
+needs these numbers. If you forget to add the number, automatically
+it will set to 0. The numbers can repeat oneself, but it will cause the
+mistakes during numbering. A few example of proper labels are below:
+?et{benzene;1} - the default numbering style will be used
+?et{:Rbenzene;2} -the big Roman numbering style will be used
+?et{:rbenzene;3} - the small Roman numbering style will be used
+?et{:rbenzene.a;4} - the same number as above will be used, but
+		    additionally index a will be given 
+		    for example: iva.
+?et{hexane.a;5} - the default numbering style will be used, and
+                 additionally the index a will be used for example: 2a
+                 or 4a.
+
+  It is important to remember, that the labels :Rbenzene and :benzene
+are totally different, and they will be given different
+number. Additionally in case such 2 labels: ?et{hexane.a;1} and
+?et{hexane;2} in one or in many eps files, both labels will be given
+the same number, but additionally the first will be given the a
+index. In this case it will be as follows: 2a and 2.
+
+THE LaTeX FILES
   
-  Pliki tex te¿ wymagaj± dopowiedniego przygotowania. Poniewa¿ nie wszystkie
-pliki eps zawieraj± etykietki oraz z powodu tego, ¿e w LaTeX nie ma jednej
-metody za³±czania rysunków do tekstu, konwerter wyszukuje w kodzie tex, 
-instrukcji nakazuj±cej mu przeszukanie pliku. Aby wskazaæ mu plik eps
-zawieraj±cy etykietki nale¿y u¿yæ konstrukcji:
-%?plik{nazwa_pliku}
+  The tex files also need a proper handling. Because not all eps files
+contain labels, and because in LaTeX doesn't exist one general method
+for pictures including, the konwerter program searches in the tex
+code, the instruction that tells to it, in which file the labels
+should be searched. The construction looks as below:
 
-  Jest to komentarz dla LaTeXa i nie zostanie on wy¶wietlony nigdzie w tek¶cie.
-Instrukcji tej nie mog± poprzedzaæ ¿adne inne znaki, musi to byæ pierwszy tekst 
-w nowej linijce. Po znalezieniu tego, program konwerter bêdzie przeszukiwa³ plik
-nazwa_pliku w poszukiwaniu etykiet.
+%?plik{filename}
 
-  Warto zaznaczyæ, ¿e polecenie %?plik{nazwa_pliku} nie musi siê odnosiæ
-koniecznie do pliku eps. Mo¿e to byæ dowolny plik tekstowy, zawieraj±cy
-odpowiednio zbudowane etykietki (patrz przygotowanie etykiet). Umo¿liwia nam
-to po¶rednie sterowanie numeracj±.
+  As one can see, that is comment in LaTeX file. The instruction
+should always start from the new line. After finding such a line, the
+konwerter program will search the labels in file filename.
 
-  Aby odwo³ywaæ siê w tek¶cie do etykiet nale¿y stworzyæ odpowiednie polecenie.
-(\newcommand). Domy¶lnie jest to \nrzw{etykietka},  lecz mo¿e byæ to zmienione, 
-poprzez u¿ycie odpowiedniej opcji wywo³ania programu (patrz OPCJE WYWO£ANIA  
-PROGRAMU). Konstrukcja \nrzw{etykietka} mo¿e pojawiæ siê w dowolnym miejscu 
-w linijce tekstu i nie musi byæ pierwsz± w danym wierszu. Pozwala to na
-swobodne pisanie, bez zwracania uwagi na formatowanie (w koñcu to TeX powinien
-za nas to zrobiæ). Etykieta ma postaæ dok³adnie tak± sam± jak w pliku eps, po
-odrzuceniu numerka po ¶redniku i samego ¶rednika. Za³ó¿my na przyk³ad ¿e w plik 
-eps wygl±da nastêpuj±co:
-?et{benzen.a;1}
-?et{:Rtoluen;2}
-?et{:rksylen;3}
-?et{benzen.b},
-to w tek¶cie dokumentu nale¿y umie¶ciæ: \nrzw{benzen.a}, \nrzw{:Rtoluen}, 
-\nrzw{:rksylen}, \nrzw{benzen.b}. Je¶li umie¶cimi dodatkowo w tek¶cie
-\nrzw{benzen}, to równie¿ zostanie to ponumerowane, pomimo ¿e w plikach eps
-jak do tej pory siê to nie pojawi³o(bêdzie mia³o ten sam numerek co etykietki
-benzen.a i benzen.b, tylko bez indeksu literowego). Wynika to ze sposobu 
-dzia³ania programu i wed³ug autora jest to poprawne.
+  It is worth to notice, that the file filename, doesn't need to be
+real eps file. It can be any text file containing the labels prepared
+as above writen. It allows us, to not straightway controlling of numbers.
 
-  Po przetworzeniu pliku o nazwie plik.tex programem konwerter otrzymamy
-nowy plik o nazwie plik.tex.auto w którym powy¿sze etykiety zostan± zamienione 
-na np: zwi±zek \nrzw{3} reaguje z \nrzw{4} daj±c... Plik plik.tex.auto nale¿y 
-przetworzyæ ponownie programem latex.
+  To call the label in the tex file, the special command should be
+made (the \newcommand command). By default it is \nrzw{label}, but this can
+be changed, using the command line parameter. The \nrzw{label}
+construction, doesn't need to start from the beginning of the line, it
+can be placed in any place. It allows us, to write without thinking
+where the line should be break (that is finally TeX business). The label
+should be the same as in eps file, after semicolon and the number
+removing. Let us consider below example. If in the eps file below
+labels are present:
 
-  Program konwerter rozpoznaje polecenie LaTeXowe \input{}, dziêki czemu mo¿liwe
-jest przetwarzanie dokumentów sk³adaj±cych siê z wielu plików.
+?et{benzene.a;1}
+?et{:Rtoluene;2}
+?et{:rxylene;3}
+?et{benzene.b}
 
-  Czasami mo¿e byæ niezbêdne aby, od jakiego¶ miejsca w tek¶cie (na przyk³ad
-nowy rozdzia³) rozpocz±æ numeracjê od nowa. Program konwerter umo¿liwia i to.
-W tym celu wystarczy w pliku tex umie¶ciæ jedn± z poni¿szych instrukcji:
+in the tex file we should place:  \nrzw{benzene.a},
+\nrzw{:Rtoluene},\nrzw{:rxylene}, \nrzw{benzene.b}. If additionally in
+the tex file, we placed \nrzw{benzene}, it also will be given a number
+- the same as for the benzene.b label. That is the result of program
+project, and according to the author, that is correct.
+
+  After processing is ready, a new file filename.tex.auto.tex is 
+produced,in which above labels will be changed to: \nrzw{3} reacts with
+\nrzw{4} giving .... The filename.tex.auto.tex should be once again
+compiled with LaTeX to get dvi file.
+
+  The konwerter program, changes also labels to numbers in eps
+file. To restore the original eps files format, run the konwerter with
+the -ntl option, or using name etykietuj on the filename.tex file.
+
+  The konwerter program recognizes the LaTeX command \input{}, what
+allows us to process documents that contained many files.
+
+  It is sometimes necessary, to start numbering from the beginning
+starting from some part of the text (for example in the new
+chapter). The konwerter program supports such a situation. To get such
+result, that is enough to include in tex file, one of the below
+instruction:
 %--set-r-to a
 %--set-R-to a
 %--set-a-to a
 %--set-l-to a
 %--set-L-to a
-Spowoduj± one ustawienie licznika dla odpowiednio liczba rzymskich ma³ych
-i wielkich, liczb arabskich oraz liter ma³ych i wielkich na liczb± a. "a" 
-musi byæ liczb±, czyli dla %--set-l-to i %--set-L-to równie¿ musi siê pojawiæ
-liczba. O ile bêdzie to potrzebne, zostanie dodana mo¿liwo¶æ ustwiania liczników
-dla liter w postaci liter. Przyk³ady u¿ycia
-%--set-R-to 12 - ustawienie licznika wielkich cyfr rzymskich na 12
-%--set-a-to 21 - ustawienie licznika liczb arabskich na 21
-Powy¿sze instrukcje musz± zaczynaæ siê od nowej linijki.
+  These commands results in setting the counter for small Roman number,
+capital Roman numbers, Arabic numbers, small letters and capital
+letters to the number a. The a, should be a number for any of
+type. These command should start from the new line.
+Examples:
+%--set-R-to 12 - setting the counter for capital Roman numbers to 12
+%--set-a-to 21 - setting the counter for Arabic numbers to 21
+  It could be sometimes useful to use another numbering style in new chapter.
+The konwerter program supports also this feature. It is enough to place in the
+tex file below command:
+%--set-d-to K, 
+where K could be: r, R, a, l, L. Beginning from this line, the default numbering
+style for new labels will be as seted. 
+  It is worth to notice, that the new settings, given by above commands, will
+concern only new labels. Old one, will have the same numbers.
 
-OPCJE WYWO£ANIA PROGRAMU
-  Wpisz konwerter --help, aby zobaczyæ opcje wraz z krótk± charakterystyk±.
+THE LANGUAGE AND THE COMMAND LINE PARAMETERS
+  The konwerter program supports at present two languages: English (default) and
+Polish. It also recognizes the LANG environment variable. If it is set to pl_PL,
+the konwerter will speak in polish, otherwise English will be used as default.
+  Type konwerter -l en -h to see the possible parameters with short characteristic.
 
-PRZYK£ADOWE U¯YCIE
+COMPATIBILITY LIST
+The konwerter is knonw to work with eps files produced by:
+1) ChemDraw from ChemOffice package
+2) Xfig - vector drawing program for linux
+3) chemtool - chemical drawing software for linux.
 
-  Program rozpoznaje z jak± nazw± zosta³ wywo³any. Wywo³anie nazw± konwerter
-jest równoznaczne z wywo³aniem: konwerter -ltn, natomiast wywo³anie etykietuj
-jest równoznaczne z: konwerter -ntl. Oto kilka przyk³adów u¿ycia:
+EXAMPLES
 
-konwerter -dns R  plik.tex - zamieñ etykiety na numery w pliku plik.tex 
-			     i wymienionych  w nim plikach eps, stosuj±c 
-			     jako domy¶lny styl numeracji cyfry rzymskie 
-			     wielkie.
+  The program konwerter recognizes he name using which it was called.
+ The konwerter name is equal to the  -ltn parameter, and the etykietuj
+name is equal to the -ntl parameter. 
 
-etykietuj -ltn plik.tex    - j.w.
+konwerter -dns R  plik.tex - change labels to numbers in plik.tex file
+			     using capital Roman numbers as default numbering
+			     style.
+			     
+etykietuj -ltn plik.tex    - the same as above
 
-konwerter -ntl plik.tex    - zamieñ numery na etykiety w plikach eps 
-			     wymienionych w pliku plik.tex
+konwerter -ntl plik.tex    - change numbers to labels in eps files mentioned
+			     in the plik.tex file
 
-etykietuj plik.tex -         j.w.
+etykietuj plik.tex -         the same as above
 
-konwerter -iss plik.tex    - zamieñ etykiety na numerki ignoruj±c wyst±pienia 
-			     $--set-counter-to
+konwerter -iss plik.tex    - change labels to numbers in plik.tex file
+ 			     ignoring $--set-counter-to switch
 
-konwerter -if plik.tex	   - zamieñ etykietki na numerki stosuj±c domy¶lny 
-			     styl numeracji dla wszystkich etykiet.
-
-
-AUTOR
+konwerter -if plik.tex	   - change labels to numbers using default
+			     numbering style for all labels. This
+                             command ignores :r, :R, :a, :l, :L
+			     switches
+			     
+AUTHOR
 Piotr Wawrzyniak piti@eliksir.ch.pw.edu.pl
-W razie pytañ proszê kontaktowaæ siê na powy¿szy adres.
-Mi³ego u¿ytkowania.
+In case of any questions please contact using above address.
+I wish you nice using.

@@ -1,30 +1,28 @@
-[0.2.0]
-- Dodana mo¿liwo¶æ jednoczesnego numerowania przy pomocy liczb, cyfr rzymskich
-  du¿ych i ma³ych, oraz liter du¿ych i ma³ych, oraz 
-- Dodane nowe opcje steruj±ce numerowaniem, m.in -srf, -sRf, -saf, -slf, -sLf
-- Mo¿liwo¶æ ingorowania opcji steruj±cych dotycz±cych numeracji i numerowania
-  wszystkiego domy¶lnym stylem.
-- Usuniêcie problemów zarz±dzania pamiêci±, przetestowanie programu przy
-  pomocy valgrind.
-- Mo¿liwo¶æ sterowania  numeracj± z poziomu pliku latex przy pomocy 
-  prze³±czników:  %--set-r-to, %--set-R-to, %--set-a-to, %--set-l-to, 
-  %--set-L-to. 
-
-[0.1.2]
+0.2.1
+- Pe³na obs³uga jêzyków. Teraz program mówi albo po polsku albo po angielsku.
+- Uwzglêdnianie zmiennej systemowej LANG.
+- Domy¶lny jêzyk angielski.
+- Poprawienie analizy wiersza poleceñ.
+- Zamiana domy¶lnie tworzonego pliku na nazwa.tex.auto.tex.
+- Dodanie nowego prze³±cznika z poziomu pliku tex --set-d-to
+0.2.0
+- Obs³uga jêzyka angielskiego i polskiego jednocze¶nie.
+- Obs³uga wielu sposobów numerowania jednocze¶nie.
+- Ustawianie liczników z poziomu dokumentu tex.
+- Nowe parametry wiersza poleceñ.
+0.1.2
 - Dopisanie angielskich komentarzy i paru po polsku.
 - Usuniêcie definicji DL_SCIEZKI do niczego nie potrzebnej w tym momencie.
 - Poprawienie pracy na stringach. Wyeliminowanie mo¿liwo¶ci nadpisywania 
-  innych zmiennych, co siê czêsto zdarza³o i powodowa³o w najlepszym 
-  przypadku naruszenie ochrony pamiêci.
-- Usuniêcie mo¿liwo¶ci przepe³nienia bufora przy podawaniu polecenia 
-  opcj± -ln.
+  innych zmiennych, co siê czêsto zdarza³o i powodowa³o w najlepszym przypadku 
+  naruszenie ochrony pamiêci.
+- Usuniêcie mo¿liwo¶ci przepe³nienia bufora przy podawaniu polecenia opcj± -ln.
 - Umo¿liwienie kompilacji gcc w wersji >=3 bez komunikatu o b³êdach.
 - Zdefiniowanie sta³ej version.
 - Poprawienie b³êdów ortograficznych.
-
-[0.1.1]
+0.1.1
 - Poprawienie procedury czytania z pliku latexowego (plik czyt_zapis.cc). 
   Teraz program prawid³owo odczytuje pliki do koñca, czego wcze¶niej 
   potrafi³ nie robiæ.
-- Dostowowanie programu do kompilacji kompilatorem gcc z serii 3. 
-  Dwie poprawki w pliku operacje.cc.
+- Dostosowanie programu do kompilacji kompilatorem gcc z serii 3. 
+- Dwie poprawki w pliku operacje.cc.

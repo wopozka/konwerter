@@ -23,7 +23,7 @@
 using namespace std;
 
 int przeszukaj_linie_eps(char*,char*,int&);
-
+extern int language;
 
 
 
@@ -34,8 +34,14 @@ int num_na_etyk(char*nazwa_pliku)
   ifstream plik_eps(nazwa_pliku);
   if(!plik_eps)
     { 
-      cout<<"Nie uda³o siê otworzyæ pliku "<<nazwa_pliku<<" do czytania. "<<endl<<"Sprawd¼ prawa."<<endl
-	  <<"Couldn't open "<<nazwa_pliku<<" file for reading. Check permissions."<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie uda³o siê otworzyæ pliku "<<nazwa_pliku<<" do czytania. "<<endl<<"Sprawd¼ prawa."<<endl;
+	}
+      else
+	{
+	  cout<<"Couldn't open "<<nazwa_pliku<<" file for reading. Check permissions."<<endl;
+	}
       return 1;
     }
   //char nazwatymcz[L_tmpnam];
@@ -46,8 +52,14 @@ int num_na_etyk(char*nazwa_pliku)
   ofstream plik_tymcz_eps(nazwa_eps_tymcz);
   if(!plik_tymcz_eps)
     {
-      cout<<"Nie mogê utworzyæ pliku tymczasowego. Sprawd¼ prawa."<<endl
-	  <<"Couldn't open temporary file. Check permissions."<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie mogê utworzyæ pliku tymczasowego. Sprawd¼ prawa."<<endl;
+	}
+      else
+	{
+	  cout<<"Couldn't open temporary file. Check permissions."<<endl;
+	}
       return 1;
     }
   
@@ -91,21 +103,39 @@ int num_na_etyk(char*nazwa_pliku)
 
   if(!plik_tymcz_eps)
     {
-      cout<<"Nie mogê otworzyæ pliku "<<nazwa_pliku<<" do zapisu."<<endl;
-      cout<<"Couldn;t open "<<nazwa_pliku<<" file for writing."<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie mogê otworzyæ pliku "<<nazwa_pliku<<" do zapisu."<<endl;
+	}
+      else
+	{
+	  cout<<"Couldn;t open "<<nazwa_pliku<<" file for writing."<<endl;
+	}
       return 1;
     }
 
   ifstream plik_eps(nazwa_eps_tymcz);//plik wej¶ciowy nie sugerowaæ siê nazw± zmiennej. Pozostawione aby nie psuæ dalszych zale¿no¶ci.
-  cout<<"Zmieniam numery na etykiety w pliku: "<<nazwa_pliku<<endl;
-  cout<<"Changing numbers to labels in "<<nazwa_pliku<<" file"<<endl;
+  if(language==0)
+    {
+      cout<<"Zmieniam numery na etykiety w pliku: "<<nazwa_pliku<<endl;
+    }
+  else
+    {
+      cout<<"Changing numbers to labels in "<<nazwa_pliku<<" file"<<endl;
+    }
   if(!plik_eps)
     {
-      cout<<"Nie moge otworzyæ pliku tymczasowego do odczytu. Co¶ posz³o nie tak."
-	  <<endl
-	  <<"Zawarto¶æ pliku "<<nazwa_pliku<<" mo¿esz znale¼æ w "<<nazwa_eps_tymcz<<"."<<endl;
-      cout<<"I couldn't open temporary file for reading. Something has gone wrong."<<endl
-	  <<"Content of the "<<nazwa_pliku<<" can be found in "<<nazwa_eps_tymcz<<" file."<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie moge otworzyæ pliku tymczasowego do odczytu. Co¶ posz³o nie tak."
+	      <<endl
+	      <<"Zawarto¶æ pliku "<<nazwa_pliku<<" mo¿esz znale¼æ w "<<nazwa_eps_tymcz<<"."<<endl;
+	}
+      else
+	{
+	  cout<<"I couldn't open temporary file for reading. Something has gone wrong."<<endl
+	      <<"Content of the "<<nazwa_pliku<<" can be found in "<<nazwa_eps_tymcz<<" file."<<endl;
+	}
       return 1;
     }
 

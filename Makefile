@@ -6,7 +6,7 @@ CFLAGS=-Wall -g
 konwerter: konwerter.o operacje.o czyt_zapis.o num_na_etyk.o prz_string.o operacje_na_tex.o system_zapisu.o
 	$(CC)  $(CFLAGS) -o konwerter konwerter.o operacje.o czyt_zapis.o num_na_etyk.o prz_string.o operacje_na_tex.o system_zapisu.o
 operacje.o: operacje.cc operacje.h czyt_zapis.h dl_wiersza.h system_zapisu.h
-	$(CC) -c -I$(INCLUDE) $(CFLAGS) operacje.cc
+	$(CC) -c -I$(INCLUDE) $(CFLAGS)  operacje.cc
 konwerter.o: konwerter.cc operacje.h dl_wiersza.h system_zapisu.h
 	$(CC) -c -I$(INCLUDE) $(CFLAGS) konwerter.cc
 czyt_zapis.o: czyt_zapis.cc czyt_zapis.h

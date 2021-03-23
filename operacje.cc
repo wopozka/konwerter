@@ -48,6 +48,7 @@ extern int zacznij_numery_od;//od jakiej liczby zacz±æ numeracjê
 extern r_numerow klasa_obslugi_etykiet;
 extern int debug_level;
 extern int ignore_set_counter_to;
+extern int language;
 
 
 //Funkcja przetwarzaj plik zajmuje siê szukaniem etykiet i plików eps w pliku texowym
@@ -58,8 +59,14 @@ int przetwarzaj_plik(char *argv1, /*char *argv2,*/kol_etykiet **wierzcholek)
   czyt.open(argv1);
   if(!czyt)
     {
-      cout<<"Nie moge otworzyæ pliku "<<argv1<<endl
-	  <<"Couldn't open file "<<argv1<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie moge otworzyæ pliku "<<argv1<<endl;
+	}
+      else
+	{
+	  cout<<"Couldn't open file "<<argv1<<endl;
+	}
       return 1;
     }
   char c[DL_WIERSZA];//zmienna zawieraj±ca linie
@@ -93,7 +100,14 @@ int przetwarzaj_plik(char *argv1, /*char *argv2,*/kol_etykiet **wierzcholek)
     }
   if(!czyt.eof()) //if we did not finish reading file
     {
-      cout<<"B³±d czytania"<<endl<<"Reading mistake"<<endl;
+      if(language==0)
+	{
+	  cout<<"B³±d czytania"<<endl;
+	}
+      else
+	{
+	  cout<<"Reading mistake"<<endl;
+	}
       return 1;
     }
   czyt.close();
@@ -190,27 +204,54 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 
   if(debug_level)
     {
-      cout<<"The eps file copied to "<<nazwa_eps_tymcz<<" file"<<endl;
-      cout<<"Opening the temporary file for writing"<<endl;
+      if(language==0)
+	{
+	  cout<<"Plik eps jest kopiowany do pliku "<<nazwa_eps_tymcz<<endl;
+	  cout<<"Otwieranie pliku tymczasowego do zapisu"<<endl;
+	}
+      else
+	{
+	  cout<<"The eps file copied to "<<nazwa_eps_tymcz<<" file"<<endl;
+	  cout<<"Opening the temporary file for writing"<<endl;
+	}
+	
     }
   
   ofstream plik_tymcz(nazwa_eps_tymcz);//temporary file opening 
   if(!plik_tymcz)
     {
-      cout<<"Nie uda³o mi siê otworzyæ pliku tymczasowego"<<endl
-	  <<"Couldn't open temporary file"<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie uda³o mi siê otworzyæ pliku tymczasowego"<<endl;
+	}
+      else
+	{
+	  cout<<"Couldn't open temporary file"<<endl;
+	}
       return 1;
     }
     
   ifstream plik_eps(nazwa_pliku); //eps file opening
   if(!plik_eps)
     {
-      cout<<"Brakuje pliku "<<nazwa_pliku<<", lub brak praw."<< endl
-	  <<"Missing file "<<nazwa_pliku<<", or access forbidden"<<endl;
+      if(language==0)
+	{
+	  cout<<"Brakuje pliku "<<nazwa_pliku<<", lub brak praw."<< endl;
+	}
+      else
+	{
+	  cout<<"Missing file "<<nazwa_pliku<<", or access forbidden"<<endl;
+	}
       return 1;
     }
-  cout<<"Znalaz³em plik "<<nazwa_pliku<<"."<<endl<<"File "<<nazwa_pliku<<" found."<<endl;
-  
+  if(language==0)
+    {
+      cout<<"Znalaz³em plik "<<nazwa_pliku<<"."<<endl;
+    }
+  else
+    {
+      cout<<"File "<<nazwa_pliku<<" found."<<endl;
+    }
   int dl_lini;
   int kolejnosc;
   char c[DL_WIERSZA];
@@ -279,9 +320,18 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 	    }//koniec else 1
 	  if(debug_level)
 	    {
-	      cout<<"Readed line from eps file: "<<c<<endl;
-	      cout<<"The label: "<<etykieta<<endl;
-	      cout<<"The number: "<<kolejnosc<<endl;
+	      if(language==0)
+		{
+		  cout<<"Czytanie linii z pliku eps: "<<c<<endl;
+		  cout<<"Etykietka: "<<etykieta<<endl;
+		  cout<<"Numer: "<<kolejnosc<<endl;
+		}
+	      else
+		{
+		  cout<<"Readed line from eps file: "<<c<<endl;
+		  cout<<"The label: "<<etykieta<<endl;
+		  cout<<"The number: "<<kolejnosc<<endl;
+		}
 	    }
 	}
       else  plik_tymcz<<c;
@@ -292,7 +342,16 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
   //global queue building
   //wk³adanie na globaln± kolejkê etykiet
   if(debug_level)
-    cout<<"Global label queue building"<<endl;
+    {
+      if(language==0)
+	{
+	  cout<<"Budowanie globalnej kolejki etykiet"<<endl;
+	}
+      else
+	{
+	  cout<<"Global label queue building"<<endl;
+	}
+    }
   {
     kolejka_w_eps*pomocnicza=pierwszy_element;
     while(pomocnicza)
@@ -306,16 +365,41 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 
   if(debug_level)
     {
-      cout<<endl<<"The global label queue printing: "<<endl;
+      if (language==0)
+	{
+	  cout<<endl<<"Budowanie globalnej kolejki etykiet: "<<endl;
+	}
+      else
+	{
+	  cout<<endl<<"The global label queue printing: "<<endl;
+	}
       kol_etykiet*pomocnicza_2=*wierzcholek;
       while(pomocnicza_2)
 	{
-	  cout<<"Label "<<pomocnicza_2->etykieta<<endl;
-	  cout<<"Number "<<pomocnicza_2->kolejny_numer<<endl;
-	  cout<<"String number "<<pomocnicza_2->kolejny_numer_string<<endl;
-	  pomocnicza_2=pomocnicza_2->nast;
+	  if(language==0)
+	    {
+	      cout<<"Etykieta "<<pomocnicza_2->etykieta<<endl;
+	      cout<<"Numer "<<pomocnicza_2->kolejny_numer<<endl;
+	      cout<<"String numer "<<pomocnicza_2->kolejny_numer_string<<endl;
+	      pomocnicza_2=pomocnicza_2->nast;
+
+	    }
+	  else
+	    {
+	      cout<<"Label "<<pomocnicza_2->etykieta<<endl;
+	      cout<<"Number "<<pomocnicza_2->kolejny_numer<<endl;
+	      cout<<"String number "<<pomocnicza_2->kolejny_numer_string<<endl;
+	      pomocnicza_2=pomocnicza_2->nast;
+	    }
 	}
-      cout<<"I have finished "<<nazwa_pliku<<" file"<<endl;
+      if(language==0)
+	{
+	  cout<<"Zakoñczy³em pracê z plikiem "<<nazwa_pliku<<endl;
+	}
+      else
+	{
+	  cout<<"I have finished "<<nazwa_pliku<<" file"<<endl;
+	}
     }
   plik_eps.close();
   plik_tymcz.close();
@@ -329,8 +413,14 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
     ifstream plik_eps(nazwa_eps_tymcz);//otwieram plik tymczasowy do odczytu aby go skopiowaæ na pierwotny eps. Nie sugerowaæ siê nazw± zmiennej.
     if (!plik_eps)
       {
-	cout<<"Nie mogê otworzyæ pliku tymczasowego "<<nazwa_eps_tymcz<<" do czytania"<<endl
-	    <<"Couldn't open temporary file: "<<nazwa_eps_tymcz<<" for reading"<<endl;
+	if(language==0)
+	  {
+	    cout<<"Nie mogê otworzyæ pliku tymczasowego "<<nazwa_eps_tymcz<<" do czytania"<<endl;
+	  }
+	else
+	  {
+	    cout<<"Couldn't open temporary file: "<<nazwa_eps_tymcz<<" for reading"<<endl;
+	  }
 	return 1;
       }
     //plik_tymcz.open(nazwa_pliku);
@@ -338,8 +428,14 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
     //Brak logiki wynika z lenistwa. Nie chcia³o mi siê poprawiaæ parê linii wiêc jest jak jest.
     if (!plik_tymcz)
       {
-	cout<<"Nie mogê otworzyæ pliku "<<nazwa_pliku<<" do zapisu"<<endl
-	    <<"Couldn't open file: "<<nazwa_pliku<<" for writing"<<endl;
+	if(language==0)
+	  {
+	    cout<<"Nie mogê otworzyæ pliku "<<nazwa_pliku<<" do zapisu"<<endl;
+	  }
+	else
+	  {
+	    cout<<"Couldn't open file: "<<nazwa_pliku<<" for writing"<<endl;
+	  }
 	return 1;
       }
 
@@ -350,31 +446,79 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
     while(!wczytaj_linie(c,&dl_lini,DL_WIERSZA,plik_eps))
       {
 	if(debug_level)
-	  cout<<"Copying the temporary file to main eps. The read line is: "<<c<<endl;
+	  {
+	    if(language==0)
+	      {
+		cout<<"Kopiowanie pliku tymczasowego na g³ówny eps. Przeczytana linia: "<<c<<endl;
+	      }
+	    else
+	      {
+		cout<<"Copying the temporary file to main eps. The read line is: "<<c<<endl;
+	      }
+	  }
 	if(przeszukaj_linie_eps(c,etykieta,kolejnosc))//je¶li zwróci 1 oznacza ¿e znalaz³ etykietê
 	  {
 	    if(debug_level)
 	      {
-		cout<<"I found the line with label. Analyzing."<<endl;
-		cout<<"The etykieta variable is equal: "<<etykieta<<endl;
-		cout<<"The c variable - the line is equal: "<<c<<endl;
+		if(language==0)
+		  {
+		    cout<<"Odnaleziono linijkê z etykietk±. Analizujê."<<endl;
+		    cout<<"Zmienna etykieka wynosi: "<<etykieta<<endl;
+		    cout<<"Zmienna c - linia wynosi: "<<c<<endl;
+		  }
+		else
+		  {
+		    cout<<"I found the line with label. Analyzing."<<endl;
+		    cout<<"The etykieta variable is equal: "<<etykieta<<endl;
+		    cout<<"The c variable - the line is equal: "<<c<<endl;
+		  }
 	      }
 	    kol_etykiet *zmienna_tymczasowa1;
 	    kol_etykiet**zmienna_tymczasowa=&zmienna_tymczasowa1;
 	    plik_tymcz<<c;//zapisz linie etykiety z %
 	    if(debug_level)
 	      {
-		cout<<"Checking whitch number has the label. ";
-		cout<<"The data for function calling:"<<endl;
-		cout<<"*wierzcholek->etykieta: "<<(*wierzcholek)->etykieta<<endl;
-		cout<<"zmienna_tymczasowa: "<<zmienna_tymczasowa<<endl;
+		if(language==0)
+		  {
+		    cout<<"Sprawdzanie który numerek na etykieta. ";
+		    cout<<"Dane dla wywo³anie funkcji:"<<endl;
+		    cout<<"*wierzcholek->etykieta: "<<(*wierzcholek)->etykieta<<endl;
+		    cout<<"zmienna_tymczasowa: "<<zmienna_tymczasowa<<endl;
+		  }
+		else
+		  {
+		    cout<<"Checking whitch number has the label. ";
+		    cout<<"The data for function calling:"<<endl;
+		    cout<<"*wierzcholek->etykieta: "<<(*wierzcholek)->etykieta<<endl;
+		    cout<<"zmienna_tymczasowa: "<<zmienna_tymczasowa<<endl;
+		  }
 	      }
 	    numer_etykiety=zwroc_numer_etykiety(*wierzcholek,etykieta,zmienna_tymczasowa);
 	    if(debug_level)
-	      cout<<"The number is checke and is equal: "<<numer_etykiety<<endl<<endl;
+	      {
+		if(language==0)
+		  {
+		    cout<<"Numer zosta³ sprawdzony i wynosi: "<<numer_etykiety<<endl<<endl;
+		  }
+		else
+		  {
+		    cout<<"The number is checked and is equal: "<<numer_etykiety<<endl<<endl;
+		  }
+	      }
 	    if(przed_etykieta_po('{',c,przed,po,'}')) numer_etykiety=0;//je¶li funkcja zwróci 1 to oznacza b³±d
 	    if(debug_level)
-	      cout<<"Function przed_etykieta_po has checked the label. Variable kolejny_numer_string is equal: "<<(*zmienna_tymczasowa)->kolejny_numer_string<<endl;
+	      {
+		if(language==0)
+		  {
+		    cout<<"Funkcj przed_etykieta_po sprawdzi³a etykietkê.Zmienna kolejny_numer_string wynosi: "
+			<<(*zmienna_tymczasowa)->kolejny_numer_string<<endl;
+		  }
+		else
+		  {
+		    cout<<"Function przed_etykieta_po has checked the label. Variable kolejny_numer_string is equal: "
+			<<(*zmienna_tymczasowa)->kolejny_numer_string<<endl;
+		  }
+	      }
 	    
 	    if(numer_etykiety)//je¶li numer_etykiety=0 oznacza to ¿e nie znalaz³ etykiety na li¶cie
 	      {//pocz±tek if
@@ -386,11 +530,24 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 		char *po1=&po[1];
 		if(debug_level)
 		  {
-		    cout<<"The folowing line is saved in eps file:"<<endl
-			<<"przed1: "<<przed<<endl
-			<<"(*zmienna_tymczasowa)->kolejny_numer_string: "<<(*zmienna_tymczasowa)->kolejny_numer_string<<endl
-			<<"po1: "<<po1<<endl;
-	       }
+		  
+		    if(language==0)
+		      {
+			cout<<"Nastêpuj±ca linia jest zapisywana do pliku eps:"<<endl
+			    <<"przed1: "<<przed<<endl
+			    <<"(*zmienna_tymczasowa)->kolejny_numer_string: "
+			    <<(*zmienna_tymczasowa)->kolejny_numer_string<<endl
+			    <<"po1: "<<po1<<endl;
+		      }
+		    else
+		      {
+			cout<<"The folowing line is saved in eps file:"<<endl
+			    <<"przed1: "<<przed<<endl
+			    <<"(*zmienna_tymczasowa)->kolejny_numer_string: "
+			    <<(*zmienna_tymczasowa)->kolejny_numer_string<<endl
+			    <<"po1: "<<po1<<endl;
+		      }
+		  }
 		
 		plik_tymcz<<przed1<<(*zmienna_tymczasowa)->kolejny_numer_string<<po1;//zapisz numer etykiety
 		wczytaj_linie(c,&dl_lini,DL_WIERSZA,plik_eps);//w pliku pom za etykiet± z % jest zwyk³a 
@@ -402,15 +559,41 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 	      {
 		if(debug_level)
 		  {
-		    cout<<"The label was not found on the list. Writing all in eps file."<<endl
-			<<"Writing the following line "<<c<<endl; 
+		    if(language==0)
+		      {
+			cout<<"Etykietka nie zosta³a znalezionalist. Writing all in eps file."<<endl
+			    <<"Writing the following line "<<c<<endl; 
+		      }
+		    else
+		      {
+			cout<<"The label was not found on the list. Writing all in eps file."<<endl
+			    <<"Writing the following line "<<c<<endl; 
+		      }
 		  }
 		char*ggg=c;
 		if(debug_level)
-		  cout<<"The ggg variable: "<<ggg<<endl;
+		  {
+		    if(language==0)
+		      {
+			cout<<"Zmienna ggg wynosi: "<<ggg<<endl;
+		      }
+		    else
+		      {
+			cout<<"The ggg variable: "<<ggg<<endl;
+		      }
+		  }
 		ggg++;
 		if(debug_level)
-		  cout<<"The ggg++ variable: "<<ggg<<endl;
+		  {
+		    if(language==0)
+		      {
+			cout<<"Zmienna ggg++ wynosi: "<<ggg<<endl;
+		      }
+		    else
+		      {
+			cout<<"The ggg++ variable: "<<ggg<<endl;
+		      }
+		  }
 		plik_tymcz<<ggg;
 	      }
 	  }
@@ -418,9 +601,17 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 	  {
 	    if(debug_level)
 	      {
-		cout<<"The label was not found. Writing to eps file line:"<<endl
-		    <<"linia c: "<<c<<endl;
-	    }
+		if(language==0)
+		  {
+		    cout<<"Etykietka nie zosta³a znaleziona. Zapisywanie do pliku eps linii:"<<endl
+			<<"linia c: "<<c<<endl;
+		  }
+		else
+		  {
+		    cout<<"The label was not found. Writing to eps file line:"<<endl
+			<<"linia c: "<<c<<endl;
+		  }
+	      }
 	    plik_tymcz<<c;//je¶li nie ma etykiety to zapisz linie
 	  }
       }
@@ -429,7 +620,16 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
   }
   unlink(nazwa_eps_tymcz);
   if(debug_level)
-    cout<<"Zakoñczone kopiowanie pliku tymczasowego eps na g³ówny eps."<<endl;
+    {
+      if(language==0)
+	{
+	  cout<<"Zakoñczone kopiowanie pliku tymczasowego eps na g³ówny eps."<<endl;
+	}
+      else
+	{
+	  cout<<"The copying of temporary file to main eps is finished."<<endl;
+	}
+    }
   return 0;
 }
 
@@ -489,8 +689,16 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
   //Putting label into global label queue
   if(debug_level)
     {
-      cout<<"Putting the label to the global label queue."<<endl;
-      cout<<"The label: "<<rekord->etykieta<<endl;
+      if(language==0)
+	{
+	  cout<<"Wk³adanie etykity na globaln± kolejkê etykiet."<<endl;
+	  cout<<"Etykietka: "<<rekord->etykieta<<endl;
+	}
+      else
+	{
+	  cout<<"Putting the label to the global label queue."<<endl;
+	  cout<<"The label: "<<rekord->etykieta<<endl;
+	}
     }
 
   if(!*wierzcholek)//There is no global label queue
@@ -501,14 +709,30 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
       //one can find label in klasa_obslugi_etykiet.numer_etykietki variable
       if(debug_level)
 	{
-	  cout<<"No label on the list. The first label will be placed."<<endl;
-	  cout<<"The label: "<<rekord->etykieta<<" is placed."<<endl;
+	  if(language==0)
+	    {
+	      cout<<"Nie znaleziono jeszcze ¿adnej etykiety na li¶cie. Wk³adam pierwsz± tetykietkê."<<endl;
+	      cout<<"Etykietka: "<<rekord->etykieta<<" zosta³a w³o¿ona."<<endl;
+	    }
+	  else
+	    {
+	      cout<<"No label in the list. The first label will be placed."<<endl;
+	      cout<<"The label: "<<rekord->etykieta<<" is placed."<<endl;
+	    }
 	}
       klasa_obslugi_etykiet.ustaw_zmienna_numer_etykietki(rekord->etykieta);
       if(debug_level)
 	{
-	  cout<<"Setting the klasa_obslugi_etykiet.numer_etykietki variable: "
-	      <<klasa_obslugi_etykiet.numer_etykietki<<endl;
+	  if(language==0)
+	    {
+	      cout<<"Ustawianie zmiennej klasaa_obslugi_etykiet.numer_etykietki: "
+		  <<klasa_obslugi_etykiet.numer_etykietki<<endl;
+	    }
+	  else
+	    {
+	      cout<<"Setting the klasa_obslugi_etykiet.numer_etykietki variable: "
+		  <<klasa_obslugi_etykiet.numer_etykietki<<endl;
+	    }
 	}
 
       kol_etykiet*wierzcholek1=new kol_etykiet;
@@ -518,8 +742,16 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	{
 	  if(debug_level)
 	    {
-	      cout<<"The label look like: :mblah.a."<<endl; 
-	      cout<<"Putting the core to the queue"<<endl;
+	      if(language==0)
+		{
+		  cout<<"Etykietka wygl±da nastêpuj±co: mblah.a."<<endl; 
+		  cout<<"Wk³adanie rdzenia etykietki do kolejki."<<endl;
+		}
+	      else
+		{
+		  cout<<"The label looks like: :mblah.a."<<endl; 
+		  cout<<"Putting the core to the queue"<<endl;
+		}
 	    }
 	  wierzcholek1->kolejny_numer=zacznij_numery_od;//historical meaning, to delete soon
 	  //copy label to global label queue
@@ -532,8 +764,16 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	  //W³o¿ony do kolejki rdzeñ etykiety, tzn :ba, teraz czas w³o¿yæ ca³± etykietê:
 	  if(debug_level)
 	    {
-	      cout<<"The core of the label is already there."<<endl;
-	      cout<<"Time to  put there all label"<<endl;
+	      if(language==0)
+		{
+		  cout<<"Rdzeñ etykietki ju¿ istnieje na globalnej li¶cie."<<endl;
+		  cout<<"Czas w³o¿yæ tam ca³± atykietkê."<<endl;
+		}
+	      else
+		{
+		  cout<<"The core of the label is already there."<<endl;
+		  cout<<"Time to  put there all label"<<endl;
+		}
 	    }
 	  kol_etykiet*dada=wierzcholek1;
 	  //kol_etykiet*wierzcholek1=new kol_etykiet;
@@ -548,7 +788,16 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	  //Jak na razie numer numer jest bez literki, czas j± dodaæ
 	  char pom[3];
 	  if(debug_level)
-	    cout<<"Adding the letter to the label"<<endl;
+	    {
+	      if(language==0)
+		{
+		  cout<<"Dok³adanie literki do etykietki."<<endl;
+		}
+	      else
+		{
+		  cout<<"Adding the letter to the label"<<endl;
+		}
+	    }
 	  pom[0]=rekord->etykieta[dlugosc-1];pom[1]='\0';
 	  strcat(wierzcholek1->kolejny_numer_string,pom);
 	}
@@ -560,13 +809,26 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	  *wierzcholek=wierzcholek1;
 	  if(debug_level)
 	    {
-	      cout<<"************************************************************"<<endl;
-	      cout<<"Label has more than 3 letters and doesn't exist on the list."<<endl;
-	      cout<<"That what is putted:"<<endl;
-	      cout<<"Number: "<<wierzcholek1->kolejny_numer<<endl;
-	      cout<<"Label: "<<wierzcholek1->etykieta<<endl;
-	      cout<<"Next string number: "<<wierzcholek1->kolejny_numer_string<<endl;
-	      cout<<"============================================================"<<endl;
+	      if(language==0)
+		{
+		  cout<<"************************************************************"<<endl;
+		  cout<<"Etykietka ma wiêcej ni¿ 3 literki i nie istnieje na globalnej kolejce etykiet."<<endl;
+		  cout<<"Oto co jest wk³adane:"<<endl;
+		  cout<<"Numer: "<<wierzcholek1->kolejny_numer<<endl;
+		  cout<<"Etukieta: "<<wierzcholek1->etykieta<<endl;
+		  cout<<"Kolejny numer string: "<<wierzcholek1->kolejny_numer_string<<endl;
+		  cout<<"============================================================"<<endl;
+		}
+	      else
+		{
+		  cout<<"************************************************************"<<endl;
+		  cout<<"Label has more than 3 letters and doesn't exist on the list."<<endl;
+		  cout<<"That what is putted:"<<endl;
+		  cout<<"Number: "<<wierzcholek1->kolejny_numer<<endl;
+		  cout<<"Label: "<<wierzcholek1->etykieta<<endl;
+		  cout<<"Next string number: "<<wierzcholek1->kolejny_numer_string<<endl;
+		  cout<<"============================================================"<<endl;
+		}
 	    }
 	}
     }
@@ -575,17 +837,44 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
     {//pocz±tek else
       
       if(debug_level)
-	cout<<"There are already labels on the list. Building forward."<<endl;
+	{
+	  if(language==0)
+	    {
+	      cout<<"W kolejce istnej± ju¿ etykiety. Wk³adam nastêpn±"<<endl;
+	    }
+	  else
+	    {
+	      cout<<"There are already labels on the list. Building forward."<<endl;
+	    }
+	}
       //Lets look if the label exists in global label queue
       kol_etykiet*nowy_element=*wierzcholek;
       if(debug_level)
-	cout<<"Looking if the label: "<<rekord->etykieta<<" exists on the lobal label queue.";
+	{
+	  if(language==0)
+	    {
+	      cout<<"Szukanie etykiety: "<<rekord->etykieta<<" na globalnej kolejce etykiet."<<endl;
+	    }
+	  else
+	    {
+	      cout<<"Looking if the label: "<<rekord->etykieta<<" exists on the lobal label queue."<<endl;
+	    }
+	}
       while(strcmp(nowy_element->etykieta,rekord->etykieta)&&nowy_element->nast)
        	nowy_element=nowy_element->nast;
       if(!strcmp(nowy_element->etykieta,rekord->etykieta)) 
 	{
 	  if(debug_level)
-	    cout<<"Label: "<<rekord->etykieta<<" found on the global label queue. Living function."<<endl;
+	    {
+	      if(language==0)
+		{
+		  cout<<"Etykieta: "<<rekord->etykieta<<" zosta³a znaleziona na globalnej li¶cie. Opuszczam funkcjê."<<endl;
+		}
+	      else
+		{
+		  cout<<"Label: "<<rekord->etykieta<<" found on the global label queue. Living function."<<endl;
+		}
+	    }
 	  return 0;
 	}
       //find the last queue element
@@ -595,7 +884,16 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
       
       //So we didn't find a label in global label queue, so lets put it there
       if(debug_level)
-	cout<<"The label: "<<rekord->etykieta<<" not found in the queue. Putting."<<endl;
+	{
+	  if(language==0)
+	    {
+	      cout<<"Etykieta: "<<rekord->etykieta<<" nie zosta³a znaleziona na li¶cie. Wk³adam j± tam"<<endl; 
+	    }
+	  else
+	    {
+	      cout<<"The label: "<<rekord->etykieta<<" not found in the queue. Putting."<<endl;
+	    }
+	}
       if(!nowy_element->nast)
 	{
 	  int dlugosc=strlen(rekord->etykieta);
@@ -605,8 +903,16 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	    {
 	      if(debug_level)
 		{
-		  cout<<"****************************"<<endl;
-		  cout<<"The label looks like blach.a"<<endl;
+		  if(language==0)
+		    {
+		      cout<<"****************************"<<endl;
+		      cout<<"Etykietak ma postaæ: blach.a"<<endl;
+		    }
+		  else
+		    {
+		      cout<<"****************************"<<endl;
+		      cout<<"The label looks like blach.a"<<endl;
+		    }
 		}
 	      char root_label[dlugosc];
 	      strncpy(root_label,rekord->etykieta,dlugosc-2);
@@ -614,8 +920,16 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	      
 	      if(debug_level)
 		{
-		  cout<<"root_label wygl±da: "<<root_label<<endl;
-		  cout<<"==========================="<<endl;
+		  if(language==0)
+		    {
+		      cout<<"root_label wygl±da: "<<root_label<<endl;
+		      cout<<"==========================="<<endl;
+		    }
+		  else
+		    {
+		      cout<<"root_label looks like: "<<root_label<<endl;
+		      cout<<"==========================="<<endl;
+		    }
 		}
 	      //wyszukaj root_label na globalnej kolejce etykiet
 	      kol_etykiet*iteruj=*wierzcholek;
@@ -639,15 +953,34 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 		{
 		  if(debug_level)
 		    {
-		      cout<<"****************************************************************"<<endl;
-		      cout<<"The label doesn't exist on the global list.Must be added."<<endl;
+		      if(language==0)
+			{
+			  cout<<"****************************************************************"<<endl;
+			  cout<<"Etykietka nie istnieje na globalnej li¶cie. Musi zostaæ dodana."<<endl;
+			}
+		      else
+			{
+			  cout<<"****************************************************************"<<endl;
+			  cout<<"The label doesn't exist on the global list.Must be added."<<endl;
+			}
 		    }
 		  klasa_obslugi_etykiet.ustaw_zmienna_numer_etykietki(rekord->etykieta);
 		  if(debug_level)
 		    {
-		      cout<<"The label number was taken using funkcjon ustaw_zmienn±_numer_etykietki"<<endl;
-		      cout<<"That is the result klasa_obslugi_etykiet.numer_etykietki: "<<klasa_obslugi_etykiet.numer_etykietki<<endl;
-		      cout<<"================================================================"<<endl;
+		      if(language==0)
+			{
+			  cout<<"Etykietka zosta³a pobrana u¿ywaj±c funkcji ustaw_zmienn±_numer_etykietki"<<endl;
+			  cout<<"Oto rezultat klasa_obslugi_etykiet.numer_etykietki: "
+			      <<klasa_obslugi_etykiet.numer_etykietki<<endl;
+			  cout<<"================================================================"<<endl;
+			}
+		      else
+			{
+			  cout<<"The label number was taken using function ustaw_zmienn±_numer_etykietki"<<endl;
+			  cout<<"That is the result klasa_obslugi_etykiet.numer_etykietki: "
+			      <<klasa_obslugi_etykiet.numer_etykietki<<endl;
+			  cout<<"================================================================"<<endl;
+			}
 		    }
 		   
 		  kol_etykiet*dodaj=new kol_etykiet;
@@ -673,12 +1006,26 @@ int wloz_na_liste(kolejka_w_eps*rekord,kol_etykiet**wierzcholek)
 	      nowy_element->nast=dodaj;
 	      if(debug_level)
 		{
-		  cout<<"****************************************************************"<<endl;
-		  cout<<"The label looks like blach"<<endl;
-		  cout<<"The label doesn't exist on the global queue. Must be added."<<endl;
-		  cout<<"The number of the label was taking using ustaw_zmienn±_numer_etykietki function"<<endl;
-		  cout<<"Here is what klasa_obslugi_etykiet.numer_etykietki looks like: "<<klasa_obslugi_etykiet.numer_etykietki<<endl;
-		  cout<<"================================================================"<<endl;
+		  if(language==0)
+		    {
+		      cout<<"****************************************************************"<<endl;
+		      cout<<"Etykietka ma postaæ blach"<<endl;
+		      cout<<"Etykietka nie istnieje na globalnej li¶cie.Musi zostaæ dodana."<<endl;
+		      cout<<"Numer etykietki zosta³ ustalony u¿ywaj±c funkcji ustaw_zmienna_numer_etykietki"<<endl;
+		      cout<<"Here is what klasa_obslugi_etykiet.numer_etykietki looks like: "
+			  <<klasa_obslugi_etykiet.numer_etykietki<<endl;
+		      cout<<"================================================================"<<endl;
+		    }
+		  else
+		    {
+		      cout<<"****************************************************************"<<endl;
+		      cout<<"The label looks like blach"<<endl;
+		      cout<<"The label doesn't exist on the global queue. Must be added."<<endl;
+		      cout<<"The number of the label was taking using ustaw_zmienna_numer_etykietki function"<<endl;
+		      cout<<"Here is what klasa_obslugi_etykiet.numer_etykietki looks like: "
+			  <<klasa_obslugi_etykiet.numer_etykietki<<endl;
+		      cout<<"================================================================"<<endl;
+		    }
 		}
 	    }
 	}
@@ -692,11 +1039,22 @@ int zwroc_numer_etykiety(kol_etykiet*wierzcholek,char*etykieta,kol_etykiet**zmie
   kol_etykiet*bierzacy=wierzcholek;
   if(debug_level)
     {
-      cout<<endl<<endl<<endl;
-      cout<<"***********************************************"<<endl;
-      cout<<"The function zwroc_numer_etykiety is speaking. Below the arguments I got:"<<endl;
-      cout<<"bierzacy->etykieta: "<<bierzacy->etykieta<<endl;
-      cout<<"etykieta: "<<etykieta<<endl;
+      if(language==0)
+	{
+	  cout<<endl<<endl<<endl;
+	  cout<<"***********************************************"<<endl;
+	  cout<<"Tu funkcja zwroc_numer_etykiety. Poni¿ej argumenty z którymi mnie wywo³ano:"<<endl;
+	  cout<<"bierzacy->etykieta: "<<bierzacy->etykieta<<endl;
+	  cout<<"etykieta: "<<etykieta<<endl;
+	}
+      else
+	{
+	  cout<<endl<<endl<<endl;
+	  cout<<"***********************************************"<<endl;
+	  cout<<"The function zwroc_numer_etykiety is speaking. Below the arguments I got:"<<endl;
+	  cout<<"bierzacy->etykieta: "<<bierzacy->etykieta<<endl;
+	  cout<<"etykieta: "<<etykieta<<endl;
+	}
     }
   while(strcmp(bierzacy->etykieta,etykieta)&&bierzacy->nast)
 	bierzacy=bierzacy->nast;
@@ -705,8 +1063,16 @@ int zwroc_numer_etykiety(kol_etykiet*wierzcholek,char*etykieta,kol_etykiet**zmie
 	  {
 	    if(debug_level)
 	      {
-		cout<<"Leaving function zwroc_numer_etykiety with 0 error."<<endl;
-		cout<<"=========================================="<<endl;
+		if(language==0)
+		  {
+		    cout<<"Wychodzê z funkcji zwroc_numer_etykiety z b³êdem 0."<<endl;
+		    cout<<"=========================================="<<endl;
+		  }
+		else
+		  {
+		    cout<<"Leaving function zwroc_numer_etykiety with 0 error."<<endl;
+		    cout<<"=========================================="<<endl;
+		  }
 	      }
 	    return 0;
 	  }
@@ -716,8 +1082,16 @@ int zwroc_numer_etykiety(kol_etykiet*wierzcholek,char*etykieta,kol_etykiet**zmie
 	    (*zmienna_tymczasowa)=bierzacy;
 	    if(debug_level)
 	      {
-		cout<<"Leaving function zwroc_numer_etykiety with 1 error."<<endl;
-		cout<<"=========================================="<<endl;
+		if(language==0)
+		  {
+		    cout<<"Wychodzê z funkcji zwroc_numer_etykiety z b³êdem 1."<<endl;
+		    cout<<"=========================================="<<endl;
+		  }
+		else
+		  {
+		    cout<<"Leaving function zwroc_numer_etykiety with 1 error."<<endl;
+		    cout<<"=========================================="<<endl;
+		  }
 	      }
 	    return 1;
 	  }
@@ -771,7 +1145,8 @@ int check_counter_to_set(char*linia)
   // counter=2 %--set-a-to
   // counter=3 %--set-l-to
   // counter=4 %--set-L-to
-  char switches[5][12]={"%--set-r-to", "%--set-R-to", "%--set-a-to", "%--set-l-to", "%--set-L-to"};
+  // counter=5 %--set-d-to
+  char switches[6][12]={"%--set-r-to", "%--set-R-to", "%--set-a-to", "%--set-l-to", "%--set-L-to", "%--set-d-to"};
   char *tymcz;
   char *checking;
   int dlugosc=strlen(linia);
@@ -779,12 +1154,12 @@ int check_counter_to_set(char*linia)
   if(dlugosc>=13&&linia[11]==' ')
     {
       tymcz=new char[dlugosc];
-      for(counter=0;counter<5;counter++)
+      for(counter=0;counter<6;counter++)
 	{
 	  if(!strncmp(linia,switches[counter],11))
 	    break;
 	}
-      if(counter==5)
+      if(counter==6)
 	return 1;
       for(int a=12;a<dlugosc;a++)
 	{
@@ -794,15 +1169,64 @@ int check_counter_to_set(char*linia)
 	    tymcz[a-12]=linia[a];
 	}
       //we don't nead dlugosc variable anymore, so we can use it for other purpose
-      dlugosc=strtol(tymcz,&checking,10);
-      if(*checking!='\0'||dlugosc<=0)
+      if(counter==5)
 	{
-	  cout<<endl<<"***************Error******************"<<endl;
-	  cout<<"You have given "<<switches[counter]<<" option, but wrong argument: "<<tymcz<<endl;
-	  cout<<"**************************************"<<endl;
-	  return 1;
+	  switch (tymcz[0])
+	    {
+	    case 'r':
+	      klasa_obslugi_etykiet.set_up_all(5,0);
+	      break;
+	    case 'R':
+	      klasa_obslugi_etykiet.set_up_all(5,1);
+	      break;
+	    case 'a':
+	      klasa_obslugi_etykiet.set_up_all(5,2);
+	      break;
+	    case 'l':
+	      klasa_obslugi_etykiet.set_up_all(5,3);
+	      break;
+	    case 'L':
+	      klasa_obslugi_etykiet.set_up_all(5,4);
+	      break;
+	    default:
+	      {
+		if(language==0)
+		  {
+		    cout<<"****************Error**********"<<endl;
+		    cout<<"Poda³e¶ opcjê "<<switches[counter]<<" ale ze z³ym argumentem: "<<tymcz<<endl;
+		    cout<<"*******************************"<<endl;
+		  }
+		else
+		  {
+		    cout<<endl<<"***************Error******************"<<endl;
+		    cout<<"You have given "<<switches[counter]<<" option, but wrong argument: "<<tymcz<<endl;
+		    cout<<"**************************************"<<endl;
+		  }
+		return 1;
+	      }
+	    }
 	}
-      klasa_obslugi_etykiet.set_up_all(counter,dlugosc);
+      else
+	{
+	  dlugosc=strtol(tymcz,&checking,10);
+	  if(*checking!='\0'||dlugosc<=0)
+	    {
+	      if(language==0)
+		{
+		  cout<<"****************Error**********"<<endl;
+		  cout<<"Poda³e¶ opcjê"<<switches[counter]<<" ale ze z³ym argumentem: "<<tymcz<<endl;
+		  cout<<"*******************************"<<endl;
+		}
+	      else
+		{
+		  cout<<endl<<"***************Error******************"<<endl;
+		  cout<<"You have given "<<switches[counter]<<" option, but wrong argument: "<<tymcz<<endl;
+		  cout<<"**************************************"<<endl;
+		}
+	      return 1;
+	    }
+	  klasa_obslugi_etykiet.set_up_all(counter,dlugosc);
+	}
       delete tymcz;
       return 0;
     }

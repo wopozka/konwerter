@@ -18,7 +18,7 @@ int przeszukaj_linie_tex(char*);
 int przed_etykieta_po(char,char*,char*,char*,char);
 int podaj_etykiete_liczbe(char *, char *, int *);//linia etykieta kolejnosc
 int zwroc_numer_etykiety(kol_etykiet*,char*,kol_etykiet**);
-
+extern int language;
 extern char polecenie[DL_WIERSZA];
 
 int operacje_na_tex(char *nazwa_pliku, kol_etykiet*wierzcholek)
@@ -27,22 +27,34 @@ int operacje_na_tex(char *nazwa_pliku, kol_etykiet*wierzcholek)
   drugi_plik_tex[DL_WIERSZA-1]=drugi_plik_tex[0]=drugi_plik_tex[1]='\0';
   
   strcat(drugi_plik_tex,nazwa_pliku);
-  strcat(drugi_plik_tex,".auto");
+  strcat(drugi_plik_tex,".auto.tex");
 
 
   ofstream plik_tex_wy(drugi_plik_tex);
   if(!plik_tex_wy)
     {
-      cout<<"Nie mog³em otworzyæ pliku wyj¶ciowego"<<endl
-	  <<"I couldn't open "<<drugi_plik_tex<<"file."<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie mog³em otworzyæ pliku wyj¶ciowego"<<endl;
+	}
+      else
+	{
+	  cout<<"I couldn't open "<<drugi_plik_tex<<"file."<<endl;
+	}
       return 1;
     }
 
   ifstream plik_tex_we(nazwa_pliku);
   if(!plik_tex_we)
     {
-      cout<<"Nie mog³em otworzyæ pliku wej¶ciowego"<<endl
-	  <<"I couldn't open "<<nazwa_pliku<<" file."<<endl;
+      if(language==0)
+	{
+	  cout<<"Nie mog³em otworzyæ pliku wej¶ciowego"<<endl;
+	}
+      else
+	{
+	  cout<<"I couldn't open "<<nazwa_pliku<<" file."<<endl;
+	}
       return 1;
     }
 
@@ -68,9 +80,16 @@ int operacje_na_tex(char *nazwa_pliku, kol_etykiet*wierzcholek)
 	    kolejnosc=zwroc_numer_etykiety(wierzcholek,etykieta,zmienna_tymczasowa);//zwraca numer etykiety
 	    if(kolejnosc==0)
 	      {
-		cout<<endl<<"Nieznana etykieta: "<<etykieta<<endl;
-		cout<<"Pozostawiam niezmienione."<<endl;
-		cout<<"Unknown label in tex file. Leave unchanged"<<endl;
+		if(language==0)
+		  {
+		    cout<<endl<<"Nieznana etykieta: "<<etykieta<<endl;
+		    cout<<"Pozostawiam niezmienione."<<endl;
+		  }
+		else
+		  {
+		    cout<<"Unknown label in tex file: "<<etykieta<<endl
+			<<"Leave unchanged."<<endl;
+		  }
 		plik_tex_wy<<c;
 	      }
 	    else
@@ -95,7 +114,7 @@ int operacje_na_tex(char *nazwa_pliku, kol_etykiet*wierzcholek)
 	    podaj_etykiete_liczbe(c,nazwa_pliku,&kolejnosc);
 	    przed_etykieta_po('{',c,przed,po,'}');
 	    operacje_na_tex(nazwa_pliku,wierzcholek);
-	    plik_tex_wy<<'\\'<<przed<<nazwa_pliku<<".auto"<<po;
+	    plik_tex_wy<<'\\'<<przed<<nazwa_pliku<<".auto.tex"<<po;
 	    break;
 	  }
 	}

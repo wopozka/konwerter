@@ -16,6 +16,7 @@
 #include <iostream>
 using namespace std;
 extern int ignore_formating;
+extern int language;
 //constructor
 r_numerow::r_numerow(int a, int b, int c, int d, int e)
 {
@@ -73,8 +74,16 @@ int r_numerow::set_up_all(int roman,int Roman,int arabic,int letters,int Letters
 
 int r_numerow::set_up_all(int what, int what_number)
 {
-  zwroc_num_etykiet[what]=what_number;
-  return 0;
+  if(what==5)
+    {
+      domyslny_styl_numeracji=what_number;
+      return 0;
+    }
+  else
+    {
+      zwroc_num_etykiet[what]=what_number;
+      return 0;
+    }
 }
 
 int r_numerow::zwroc_numer_etykiety(int numer)
@@ -130,8 +139,14 @@ int r_numerow::int_na_char(int a)
       pomocnicza=new kol_liczb;
       if (!pomocnicza) 
 	{
-	  cout<<"Problem z zaalokowaniem wolnej pamiêci"<<endl;
-	  cout<<"Error! Couldn't alocate free memory."<<endl;
+	  if(language==0)
+	    {
+	      cout<<"Problem z zaalokowaniem wolnej pamiêci"<<endl;
+	    }
+	  else
+	    {
+	      cout<<"Error! Couldn't alocate free memory."<<endl;
+	    }
 	  return 1;//B³±d alokacji pamiêci
 	}
       
@@ -231,8 +246,14 @@ int r_numerow::int_na_rom_char(int liczba,int mal_duz)
   float c;
   if(liczba>3899)
     {
-      cout<<"Przekroczony maksymalny zakres dla liczb rzymskich. Maksymalnie mo¿na przypisaæ 3899"<<endl;
-      cout<<"Maksimal range for roman numbers is 3899. Yours numbers are to high. Sorry dude.";
+      if(language==0)
+	{
+	  cout<<"Przekroczony maksymalny zakres dla liczb rzymskich. Maksymalnie mo¿na przypisaæ 3899"<<endl;
+	}
+      else
+	{
+	  cout<<"Maximal range for roman numbers is 3899. Yours numbers are to high. Sorry dude.";
+	}
       return 1;
 
     }
@@ -242,8 +263,14 @@ int r_numerow::int_na_rom_char(int liczba,int mal_duz)
       pomocnicza=new kol_liczb;
       if (!pomocnicza)
 	{
-	  cout<<"B³ad!. Problemy z zaalokowaniem pamiêci!"<<endl;
-	  cout<<"Error!. Memory allocation problem.!"<<endl;
+	  if(language==0)
+	    {
+	      cout<<"B³ad!. Problemy z zaalokowaniem pamiêci!"<<endl;
+	    }
+	  else
+	    {
+	      cout<<"Error!. Memory allocation problem.!"<<endl;
+	    }
 	  return 1;
 	}
       if(!pierwszy)
@@ -328,8 +355,14 @@ char tablica_liter[26][2]={"a","b","c","d","e","f","g","h","i","j","k","l","m","
      pomocnicza=new kol_liczb;
      if (!pomocnicza)
 	{
-	  cout<<"B³ad!. Problemy z zaalokowaniem pamiêci!"<<endl;
-	  cout<<"Error!. Memory allocation problem.!"<<endl;
+	  if(language==0)
+	    {
+	      cout<<"B³ad!. Problemy z zaalokowaniem pamiêci!"<<endl;
+	    }
+	  else
+	    {
+	      cout<<"Error!. Memory allocation problem.!"<<endl;
+	    }
 	  return 1;
 	}
      if(!pierwszy)

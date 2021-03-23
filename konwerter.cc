@@ -22,7 +22,7 @@
 #include<stdlib.h>
 #include"operacje_na_tex.h"
 #include"system_zapisu.h"
-#define Def_version "0.1.99 (16.02.2005)"
+#define Def_version "0.2.1 (6.03.2005)"
 #define Def_email "piti@eliksir.ch.pw.edu.pl"
 
 kol_etykiet*wierzcholek;
@@ -32,7 +32,7 @@ r_numerow klasa_obslugi_etykiet(1,1,1,1,1);
 char numer_czy_etykieta='n';
 int zacznij_numery_od=1;
 char polecenie[DL_WIERSZA]; //what latex command will be use for label inserting
-char jezyk[3]="pl"; //language 
+int language=1; //language 0 - polish; 1 - english
 
 int srf=1;
 int sRf=1;
@@ -43,12 +43,25 @@ int dns=2;
 int debug_level=0;
 int ignore_set_counter_to=0;
 int ignore_formating=0;
+int help=0;
 
 void pomoc(); //help function declaration
 
 int main(int argc,char *argv[])
 {
+  char **env=environ;
+  
+  while(*env)
+    {
+      if(!strncmp(*env,"LANG=pl_PL",10))
+	{
+	  language=0;
+	  break;
+	}
+      env++;
+    }
 
+ 
   if(argc<2)
     {
       pomoc();
@@ -89,7 +102,7 @@ int main(int argc,char *argv[])
 
 	  if(!strcmp(argv[i],"--ignore-formating")){ignore_formating=1;czy_znalazlem=1;}
 
-
+	  if(!strcmp(argv[i],"-h")||!strcmp(argv[i],"--help")){help=1;czy_znalazlem=1;}
 	  
 	  	  	  	  
 	  //**************************************************************;
@@ -101,15 +114,26 @@ int main(int argc,char *argv[])
 	      if(i<argc)srf=atoi(argv[i]);
 	      else
 		{
-		    cout<<"B³±d opcji."<<endl;
-		    cout<<"Wrong parameter of option."<<endl;		     
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong parameter."<<endl;		     
+		    }
 		     return 1;
 		}
 	      if(srf==0)
 		{
-		  
-		  cout<<"Z³y argument opcji -srf."<<endl;
-		  cout<<"Wrong -srf option argument."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument opcji -srf."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong -srf option argument."<<endl;
+		    }
 		  return 1;
 		}
 	    }
@@ -120,14 +144,26 @@ int main(int argc,char *argv[])
 	      if(i<argc)srf=atoi(argv[i]);
 	      else
 		{
-		  cout<<"B³±d opcji."<<endl;
-		  cout<<"Wrong parameter."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong parameter."<<endl;
+		    }
 		  return 1;
 		}
 	      if(srf==0)
 		{
-		  cout<<"Z³y argument opcji --start-roman-from."<<endl;
-		  cout<<"Wrong --start-roman-from option argument."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument opcji --start-roman-from."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong --start-roman-from option argument."<<endl;
+		    }
 		  return 1;
 		}
 
@@ -142,15 +178,26 @@ int main(int argc,char *argv[])
 	      if(i<argc)sRf=atoi(argv[i]);
 	      else
 		{
-		    cout<<"B³±d opcji."<<endl;
-		    cout<<"Wrong parameter of option."<<endl;		     
+		  if(language==0)
+		    {
+		      cout<<"B³±d opcji."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong parameter of option."<<endl;		     
+		    }
 		     return 1;
 		}
 	      if(srf==0)
 		{
-		  
-		  cout<<"Z³y argument opcji -sRf."<<endl;
-		  cout<<"Wrong -sRf option argument."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument opcji -sRf."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong -sRf option argument."<<endl;
+		    }
 		  return 1;
 		}
 	    }
@@ -161,14 +208,26 @@ int main(int argc,char *argv[])
 	      if(i<argc)sRf=atoi(argv[i]);
 	      else
 		{
-		  cout<<"B³±d opcji."<<endl;
-		  cout<<"Wrong parameter."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"B³±d opcji."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong parameter."<<endl;
+		    }
 		  return 1;
 		}
 	      if(srf==0)
 		{
-		  cout<<"Z³y argument opcji --start-Roman-from."<<endl;
-		  cout<<"Wrong --start-Roman-from option argument."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument opcji --start-Roman-from."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong --start-Roman-from option argument."<<endl;
+		    }
 		  return 1;
 		}
 
@@ -183,15 +242,26 @@ int main(int argc,char *argv[])
 	      if(i<argc)saf=atoi(argv[i]);
 	      else
 		{
-		    cout<<"B³±d opcji."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"B³±d opcji."<<endl;
+		    }
+		  else
+		    {
 		    cout<<"Wrong parameter of option."<<endl;		     
-		     return 1;
+		    }
+		  return 1;
 		}
 	      if(saf==0)
 		{
-		  
-		  cout<<"Z³y argument opcji -saf."<<endl;
-		  cout<<"Wrong -srf option argument."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument opcji -saf."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong -srf option argument."<<endl;
+		    }
 		  return 1;
 		}
 	    }
@@ -202,14 +272,26 @@ int main(int argc,char *argv[])
 	      if(i<argc)saf=atoi(argv[i]);
 	      else
 		{
-		  cout<<"B³±d opcji."<<endl;
-		  cout<<"Wrong parameter."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"B³±d opcji."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong parameter."<<endl;
+		    }
 		  return 1;
 		}
 	      if(srf==0)
 		{
-		  cout<<"Z³y argument opcji --start-arabic-from."<<endl;
-		  cout<<"Wrong --start-arabic-from option argument."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Z³y argument opcji --start-arabic-from."<<endl;
+		    }
+		  else
+		    {
+		      cout<<"Wrong --start-arabic-from option argument."<<endl;
+		    }
 		  return 1;
 		}
 
@@ -225,15 +307,20 @@ int main(int argc,char *argv[])
 	      if(i<argc)slf=atoi(argv[i]);
 	      else
 		{
-		    cout<<"B³±d opcji."<<endl;
+		  if(language==0)
+		    {
+		      cout<<"B³±d opcji."<<endl;
+		    }
+		  else
 		    cout<<"Wrong parameter of option."<<endl;		     
 		     return 1;
 		}
 	      if(slf==0)
 		{
-		  
-		  cout<<"Z³y argument opcji -slf."<<endl;
-		  cout<<"Wrong -slf option argument."<<endl;
+		  if(language==0)
+		    cout<<"Z³y argument opcji -slf."<<endl;
+		  else
+		    cout<<"Wrong -slf option argument."<<endl;
 		  return 1;
 		}
 	    }
@@ -244,14 +331,18 @@ int main(int argc,char *argv[])
 	      if(i<argc)slf=atoi(argv[i]);
 	      else
 		{
-		  cout<<"B³±d opcji."<<endl;
-		  cout<<"Wrong parameter."<<endl;
+		  if(language==0)
+		    cout<<"B³±d opcji."<<endl;
+		  else
+		    cout<<"Wrong parameter."<<endl;
 		  return 1;
 		}
 	      if(slf==0)
 		{
-		  cout<<"Z³y argument opcji --start-letter-from."<<endl;
-		  cout<<"Wrong --start-letter-from option argument."<<endl;
+		  if(language==0)
+		    cout<<"Z³y argument opcji --start-letter-from."<<endl;
+		  else
+		    cout<<"Wrong --start-letter-from option argument."<<endl;
 		  return 1;
 		}
 
@@ -266,15 +357,18 @@ int main(int argc,char *argv[])
 	      if(i<argc)sLf=atoi(argv[i]);
 	      else
 		{
+		  if(language==0)
 		    cout<<"B³±d opcji."<<endl;
+		  else
 		    cout<<"Wrong parameter of option."<<endl;		     
-		     return 1;
+		  return 1;
 		}
 	      if(sLf==0)
 		{
-		  
-		  cout<<"Z³y argument opcji -sLf."<<endl;
-		  cout<<"Wrong -sLf option argument."<<endl;
+		  if(language==0)
+		    cout<<"Z³y argument opcji -sLf."<<endl;
+		  else
+		    cout<<"Wrong -sLf option argument."<<endl;
 		  return 1;
 		}
 	    }
@@ -285,14 +379,18 @@ int main(int argc,char *argv[])
 	      if(i<argc)sLf=atoi(argv[i]);
 	      else
 		{
-		  cout<<"B³±d opcji."<<endl;
-		  cout<<"Wrong parameter."<<endl;
+		  if(language==0)
+		    cout<<"B³±d opcji."<<endl;
+		  else
+		    cout<<"Wrong parameter."<<endl;
 		  return 1;
 		}
 	      if(sLf==0)
 		{
-		  cout<<"Z³y argument opcji --start-Letter-from."<<endl;
-		  cout<<"Wrong --start-Letter-from option argument."<<endl;
+		  if(language==0)
+		    cout<<"Z³y argument opcji --start-Letter-from."<<endl;
+		  else
+		    cout<<"Wrong --start-Letter-from option argument."<<endl;
 		  return 1;
 		}
 
@@ -330,8 +428,10 @@ int main(int argc,char *argv[])
 		}
 		 else
 		   {
-		    cout<<"B³±d opcji -dns/--default-numbering-style."<<endl;
-		    cout<<"Wrong parameter of -dns/--default-numbering-style option."<<endl;		     
+		     if(language==0)
+		       cout<<"B³±d opcji -dns/--default-numbering-style."<<endl;
+		     else
+		       cout<<"Wrong parameter of -dns/--default-numbering-style option."<<endl;		     
 		    return 1;
 		   }
 	    }
@@ -347,10 +447,14 @@ int main(int argc,char *argv[])
 		{
 		  if(strlen(argv[i])>DL_WIERSZA-2)
 		    {
-		      cout<<"Ha. Nie uda ci siê przepe³niæ tutaj bufora hakerze!"
-			  <<endl
-			  <<"Polecenie za d³ugie."<<endl
-			  <<"To long -ln option parameter"<<endl;
+		      if(language==0)
+			{
+			  cout<<"Ha. Nie uda ci siê przepe³niæ tutaj bufora hakerze!"
+			      <<endl
+			      <<"Polecenie za d³ugie."<<endl;
+			}
+		      else
+			cout<<"To long -ln option parameter"<<endl;
 		      return 1;
 		    }
 		  else
@@ -358,10 +462,16 @@ int main(int argc,char *argv[])
 		}
 	      else
 		{
-		  cout<<"Je¶li w pliku LaTeX polecenie wygl±da \\nrzw"<<endl 
-		      <<"to opcja -ln musi wygl±daæ \\\\nrzw"<<endl
-		      <<"If in LaTeX file command is \\nrzw"<<endl
-		      <<"so option -ln must be \\\\nrzw"<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Je¶li w pliku LaTeX polecenie wygl±da \\nrzw"<<endl 
+			  <<"to opcja -ln musi wygl±daæ \\\\nrzw"<<endl;
+		    }
+		  else
+		    {
+		      cout<<"If in LaTeX file command is \\nrzw"<<endl
+			  <<"so option -ln must be \\\\nrzw"<<endl;
+		    }
 		  return 1;
 		}
 	    }
@@ -373,10 +483,14 @@ int main(int argc,char *argv[])
 		{
 		  if(strlen(argv[i])>DL_WIERSZA-2)
 		    {
-		      cout<<"Ha. Nie uda ci siê przepe³niæ tutaj bufora hakerze!"
-			  <<endl
-			  <<"Polecenie za d³ugie."<<endl
-			  <<"argv[i] command to long"<<endl;
+		      if(language==0)
+			{
+			  cout<<"Ha. Nie uda ci siê przepe³niæ tutaj bufora hakerze!"
+			      <<endl
+			      <<"Polecenie za d³ugie."<<endl;
+			}
+		      else
+			cout<<"argv[i] command to long"<<endl;
 		      return 1;
 		    }
 		  else
@@ -384,10 +498,16 @@ int main(int argc,char *argv[])
 		}
 	      else
 		{
-		  cout<<"Je¶li w pliku LaTeX polecenie wygl±da \\nrzw"<<endl
-		      <<"to opcja --label-name musi wygl±daæ \\\\nrzw"<<endl
-		      <<"If in LaTeX file command is \\nrzw"<<endl
-		      <<"so option -ln must be \\\\nrzw"<<endl;
+		  if(language==0)
+		    {
+		      cout<<"Je¶li w pliku LaTeX polecenie wygl±da \\nrzw"<<endl
+			  <<"to opcja --label-name musi wygl±daæ \\\\nrzw"<<endl;
+			}
+		  else
+		    {
+		      cout<<"If in LaTeX file command is \\nrzw"<<endl
+			  <<"so option -ln must be \\\\nrzw"<<endl;
+		    }
 		  return 1;
 		}
 	    }
@@ -398,23 +518,17 @@ int main(int argc,char *argv[])
 	    {
 	      i++;czy_znalazlem=1;
 	      
-	      if (!strcmp(argv[i],"en")) strcpy(jezyk,"en");
+	      if (!strcmp(argv[i],"en")) language=1;
+	      if (!strcmp(argv[i],"pl")) language=0;
 
 	    }
-	  
-	  
-	  
-	  if(!strcmp(argv[i],"-h")||!strcmp(argv[i],"--help"))
-	    {
-	      pomoc();
-	      return 1;
-	    }
-
+	  	  	  	  
 	  if(!czy_znalazlem)
 	    {
-
-	      cout<<"Nieznana opcja "<<argv[i]<<endl
-		  <<"Unknown option "<<argv[i]<<endl;
+	      if(language==0)
+		cout<<"Nieznana opcja "<<argv[i]<<endl;
+	      else
+		cout<<"Unknown option "<<argv[i]<<endl;
 	      return 1;
 
 	    }
@@ -422,65 +536,94 @@ int main(int argc,char *argv[])
     }
 
   //*****************************************************;
-  //Maybe you nead help?
-  if(!strcmp(argv[1],"-h")||!strcmp(argv[1],"--help"))
-    {
-      pomoc();
-      return 1;
-    }
 
   if(i<argc)
 
     if(argv[i][0]=='-')
       {
-	cout<<"Brakuje argumentu opcji: "<<argv[i]<<endl
-	    <<"Missing option argument: "<<argv[i]<<endl;
+	if(language==0)
+	  cout<<"Brakuje argumentu opcji: "<<argv[i]<<endl;
+	else
+	  cout<<"Missing option argument: "<<argv[i]<<endl;
 	return 1;
       }
  
-  if(i>=argc){cout<<"Brak nazwy pliku"<<endl<<"Missing filename"<<endl;return 1;}  
+  if(i>=argc&&!help)
+    {
+      if(language==0)
+	cout<<"Brak nazwy pliku"<<endl;
+      else
+	cout<<"Missing filename"<<endl;
+      return 1;
+    }  
+
   
   if(srf<=0)
     {
-      cout<<"B³êdna opcja -srf albo --start-roman-from "<<srf<<". Numer musi byæ  wiêkszy od zera."<<endl
-	  <<"Wrong option -srf or --start-roman-from parametr "<<srf<<". Number must be greater than 0."<<endl;
+      if(language==0)
+	cout<<"B³êdna opcja -srf albo --start-roman-from. Numer musi byæ  wiêkszy od zera."<<endl;
+      else
+	cout<<"Wrong option -srf or --start-roman-from parametr. Number must be greater than 0."<<endl;
       return 1;
     }
   
   if(sRf<=0)
     {
-      cout<<"B³êdna opcja -sRf albo --start-Roman-from "<<sRf<<". Numer musi byæ  wiêkszy od zera."<<endl
-	  <<"Wrong option -sRf or --start-Roman-from parametr "<<sRf<<". Number must be greater than 0."<<endl;
+      if(language==0)
+	cout<<"B³êdna opcja -sRf albo --start-Roman-from. Numer musi byæ  wiêkszy od zera."<<endl;
+      else
+	cout<<"Wrong option -sRf or --start-Roman-from parametr. Number must be greater than 0."<<endl;
       return 1;
     }
  
   if(saf<=0)
     {
-      cout<<"B³êdna opcja -saf albo --start-arabic-from "<<saf<<". Numer musi byæ  wiêkszy od zera."<<endl
-	  <<"Wrong option -saf or --start-arabic-from parametr "<<saf<<". Number must be greater than 0."<<endl;
+      if(language==0)
+	cout<<"B³êdna opcja -saf albo --start-arabic-from. Numer musi byæ  wiêkszy od zera."<<endl;
+      else
+	cout<<"Wrong option -saf or --start-arabic-from parametr. Number must be greater than 0."<<endl;
       return 1;
     }
 
   if(slf<=0)
     {
-      cout<<"B³êdna opcja -slf albo --start-letter-from "<<slf<<". Numer musi byæ  wiêkszy od zera."<<endl
-	  <<"Wrong option -slf or --start-letter-from parametr "<<slf<<". Number must be greater than 0."<<endl;
+      if(language==0)
+	cout<<"B³êdna opcja -slf albo --start-letter-from. Numer musi byæ  wiêkszy od zera."<<endl;
+      else
+	cout<<"Wrong option -slf or --start-letter-from parametr. Number must be greater than 0."<<endl;
       return 1;
     }
 
   if(sLf<=0)
     {
-      cout<<"B³êdna opcja -sLf albo --start-Letter-from "<<sLf<<". Numer musi byæ  wiêkszy od zera."<<endl
-	  <<"Wrong option -sLf or --start-Letter-from parametr "<<sLf<<". Number must be greater than 0."<<endl;
+      if(language==0)
+	cout<<"B³êdna opcja -sLf albo --start-Letter-from. Numer musi byæ  wiêkszy od zera."<<endl;
+      else
+	cout<<"Wrong option -sLf or --start-Letter-from parametr. Number must be greater than 0."<<endl;
       return 1;
     }
 
   if(dns<=0)
     {
-      cout<<"B³êdna opcja -dns albo --default-numbering-style "<<endl
-	  <<"Wrong option -dns or --default-numbering-style parameter "<<endl;
-      cout<<"Dozwolone warto¶ci to (Allowed walues are): r, R, a, l, L"<<endl;
+      if(language==0)
+	{
+	  cout<<"B³êdna opcja -dns albo --default-numbering-style "<<endl
+	      <<"Dozwolone warto¶ci: r, R, a, l, L"<<endl;
+	}
+      else
+	{
+	  cout<<"Wrong option -dns or --default-numbering-style parameter "<<endl
+	      <<"Allowed walues are: r, R, a, l, L"<<endl;
+	}
       return 1;
+    }
+
+
+  //Maybe you nead help if so, give it.
+  if(help)
+    {
+      pomoc();
+      return 0;
     }
 
   klasa_obslugi_etykiet.set_up_all(srf,sRf,saf,slf,sLf,dns);
@@ -497,8 +640,14 @@ int main(int argc,char *argv[])
     {
       if(!wierzcholek)
 	{
-	  cout<<"Nie znaleziono ¿adnej etykiety w plikach eps."<<endl
-	      <<"No label was found"<<endl;
+	  if(language==0)
+	    {
+	      cout<<"Nie znaleziono ¿adnej etykiety w plikach eps."<<endl;
+	    }
+	  else
+	    {
+	      cout<<"No label was found"<<endl;
+	    }
 	  return 1;
 	}
       //zmieniamy etykiety na numery w plikach tex
@@ -517,14 +666,20 @@ int main(int argc,char *argv[])
     }
   //end of memory cleaning
   
-  cout<<endl<<"Program zakoñczy³ siê pomy¶lnie."<<endl
-      <<"Program finished successfuly"<<endl;
+  if(language==0)
+    {
+      cout<<endl<<"Program zakoñczy³ siê pomy¶lnie."<<endl;
+    }
+  else
+    {
+     cout<<"Program finished successfuly"<<endl;
+    }
   return 0;
 }
 
 void pomoc()
 {
-  if(!strcmp(jezyk,"pl"))
+  if(language==0)
   {
     cout<<endl;
     cout<<"Automatyczna zmiana etykiet w pliku LaTeX-owym na numery."<<endl;
@@ -603,6 +758,7 @@ void pomoc()
 	  <<"                                    style"<<endl;
       cout<<"-v, --verbose                       be verbose"<<endl;
       cout<<"-h, --help                          short help"<<endl;
+      cout<<"Wpisz \"konwerter -l pl -h\" po pomoc po polsku."<<endl;
     }
 }
 
