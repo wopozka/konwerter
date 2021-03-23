@@ -1,0 +1,1 @@
+int bm(char *,char *);
