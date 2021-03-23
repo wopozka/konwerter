@@ -258,6 +258,7 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
   char c[DL_WIERSZA];
   char etykieta[DL_WIERSZA];
 
+  
   //local label queue building
   while(!wczytaj_linie(c,&dl_lini,DL_WIERSZA,plik_eps))//reads line from eps file
     {
@@ -335,7 +336,11 @@ int przetworz_eps(char *nazwa_pliku,kol_etykiet**wierzcholek)
 		}
 	    }
 	}
-      else  plik_tymcz<<c;
+      else  
+	plik_tymcz<<c;
+
+      //zerujemy wczytan± linie (zmienna c) oraz etykietê inaczej s± szopki
+      
     }//koniec while;
 
   //zakoñczy³o siê budowanie kolejki etykiet z pliku eps teraz nale¿y je wprowadziæ na listê etykiet
@@ -648,8 +653,30 @@ int przeszukaj_linie_eps(char *linia, char *etykieta, int &kolejnosc)
   if(czy_znalazlem>-1)
     {
       int *taka_sobie_zmienna=&kolejnosc;
-      podaj_etykiete_liczbe(linia,etykieta,taka_sobie_zmienna);
-      return 1;
+      if(podaj_etykiete_liczbe(linia,etykieta,taka_sobie_zmienna))
+	{
+	  if(language==0)
+	    {
+	      cout<<"****************************************************************"<<endl
+		  <<"Znalaz³em niepoprawne etykiety w tym pliku. Proszê je sprawdziæ."<<endl
+		  <<"Typowe b³êdy to ró¿ne fonty w etykiecie, brak } na koñcu,"<<endl
+		  <<"albo litery po ¶redniku zamiast cyfr"<<endl
+		  <<"***************************************************************"<<endl<<endl;
+	    }
+	  else
+	    {
+	      cout<<"**************************************************************"<<endl
+		  <<"I have found incorrect labels in this file. Please check them."<<endl
+		  <<"Typical mistakes can be different fonts in label, } missing"<<endl
+		  <<"or the letters after semicolon instead of numbers"<<endl
+		  <<"***************************************************************"<<endl<<endl;
+
+	    }
+
+	  return 0;
+	}
+      else
+	return 1;
     }
   else  
     return 0;
@@ -657,9 +684,11 @@ int przeszukaj_linie_eps(char *linia, char *etykieta, int &kolejnosc)
 
 int podaj_etykiete_liczbe(char *linia, char *etykieta, int *kolejnosc)
 {
+  //funkcja zwraca 0 w przypadku gdy znalaz³a poprawn± etykietê i 1 gdy by³a niepoprawna
   char pomocnicza[DL_WIERSZA];
   pomocnicza[DL_WIERSZA-1]='\0';
   int pozycja=0; 
+  int if_bracket_found=0;
 
   strcpy(pomocnicza,linia);
   int n=0;
@@ -669,19 +698,34 @@ int podaj_etykiete_liczbe(char *linia, char *etykieta, int *kolejnosc)
   while((pomocnicza[n]!=';')&&(pomocnicza[n]!='}')&&(pomocnicza[n]!=')')&&(pomocnicza[n]!='\0'))
     {
       etykieta[pozycja]=pomocnicza[n];
-      n++;pozycja++;
+      n++;
+      pozycja++;
+      //if found ) bracket, that means that there was something wront with label
+      if(pomocnicza[n]==')')
+	if_bracket_found=1;
     }
   etykieta[pozycja]='\0';
-  if (pozycja==0)
+  //check if the label has any length or if maybe ) was found instead of ; or }
+  if (pozycja==0||if_bracket_found==1)
+    return 1;
+  //check if this bracket } was found if so, than label does not have any nuber after ; so return 0
+  if (pomocnicza[n]=='}')
     return 0;
+
   n++;
   *kolejnosc=0;
   while(pomocnicza[n]!='}'&&isdigit(pomocnicza[n]))
     {
       *kolejnosc=*kolejnosc*10+pomocnicza[n]-'0';
       n++;
+      //the label must end with correct right }
+      if(pomocnicza[n]=='}')
+	if_bracket_found=1;
     } 
-  return 0;
+  if(if_bracket_found==1)
+    return 0;
+  else
+    return 1;
 }
 
 

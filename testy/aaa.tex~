@@ -1,0 +1,34 @@
+%i%--set-d-to R
+%?plik{cyfry_arabskie.eps}
+%%--set-d-to w
+%?plik{cyfry_rzymskie.eps}
+%?plik{literki.eps}
+%?plik{to_samo_co_w_aaa.eps}
+\nrzw{aaaaa}
+\nrzw{bbbbb}
+\nrzw{ccccc}
+\nrzw{ddddd}
+\nrzw{ddddd.a}
+\nrzw{ddddd.b}
+\nrzw{aaaaa.a}
+\nrzw{:RI.a}
+\nrzw{:RII.a}
+\nrzw{:RI}
+\nrzw{:RIII}
+\nrzw{:ri}
+\nrzw{:rii}
+\nrzw{:rii.a}
+\nrzw{:la}
+\nrzw{:lb}
+\nrzw{:lc}
+\nrzw{:LA}
+\nrzw{:LB}
+\nrzw{:LC}
+\nrzw{aaaaa}
+\nrzw{bbbbb}
+\nrzw{ccccc}
+\nrzw{ddddd}
+\nrzw{ddddd.a}
+\nrzw{ddddd.b}
+\nrzw{aaaaa.a}
+\input{bbb.tex}

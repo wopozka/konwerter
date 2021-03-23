@@ -22,7 +22,7 @@
 #include<stdlib.h>
 #include"operacje_na_tex.h"
 #include"system_zapisu.h"
-#define Def_version "0.2.2 (21.03.2006)"
+#define Def_version "0.2.3 (22.03.2006)"
 #define Def_email "piti@piti.vsv.pl"
 
 kol_etykiet*wierzcholek;

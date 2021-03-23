@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ -f ./konwerter ]; then  
+
+	echo
+	echo Test programu rozpocznie siê za 5 sekund
+	echo "./konwerter aaa.tex >/dev/null"
+	sleep 5
+
+	./konwerter aaa.tex >/dev/null
+	diff cyfry_arabskie.eps cyfry_arabskie.eps.ok
+	diff cyfry_rzymskie.eps cyfry_rzymskie.eps.ok
+	diff literki.eps literki.eps.ok
+	diff to_samo_co_w_aaa.eps to_samo_co_w_aaa.eps.ok
+	diff aaa.tex.auto aaa.tex.auto.ok
+
+	echo
+	echo "Je¶li diff nie wyrzuci³ ¿adnych róznic pierwszy etap testu zakoñczony"
+	echo "Za 5 sekund drugi etap"
+	echo 
+	echo "./konwerter -ntl aaa.tex >/dev/null"
+	sleep 5
+
+	./konwerter -ntl aaa.tex >/dev/null
+	diff cyfry_arabskie.eps cyfry_arabskie.eps.oryg
+	diff cyfry_rzymskie.eps cyfry_rzymskie.eps.oryg
+	diff literki.eps literki.eps.oryg
+	diff to_samo_co_w_aaa.eps to_samo_co_w_aaa.eps.oryg
+
+	echo
+	echo "Je¶li diff nie wyrzuci³ ¿adnych róznic to drugi etap testu zakoñczony"
+	echo "Dziêkujê za pomoc"
+	echo "Pozdrawiam. Piotrek"
+else	
+	echo
+	echo "*****************************************************"
+	echo "Brak pliku konwerter. Skopiuj go tutaj. Powinien byæ"
+	echo "W katalogu w którym zbudowa³e¶ program";
+	echo "******************************************************"
+	echo
+fi;
+	

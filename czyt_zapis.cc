@@ -12,10 +12,17 @@ and tex file (wczytaj_linie_tex)
 #include"czyt_zapis.h"
 extern int debug_level;
 extern int language;
+int liczsobie;
 
 int wczytaj_linie(char *linia,int *dlugosc, int DL_WIERSZA, ifstream &czyt)
-
 {
+  //miejmy pewno¶æ ¿e linia jest jednak naprawde wyzerowana
+  for(liczsobie=0;liczsobie<DL_WIERSZA;liczsobie++)
+    {
+      linia[liczsobie]='\0';
+    }
+
+  
   if(debug_level)
     {
       if(language==0)

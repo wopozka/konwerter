@@ -1,3 +1,6 @@
+0.2.3
+- Poprawiony b³±d zwi±zany z popsutymi plikami eps, teraz wy¶wietla ifnormacjê
+- Poprawione numerowanie cyframi rzymskimi
 0.2.2
 - Dodana opcja --test która nie zmienia nic, tylko testuje poprawno¶æ etykiet
 - Uaktualnienie emaili i poprawki literówek

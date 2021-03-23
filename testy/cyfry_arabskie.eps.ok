@@ -1,0 +1,15 @@
+%%%%%Cyfry arabskie
+%Tu powinna byc jedynka ?et{aaaaa;1}
+Tu powinna byc jedynka 1
+%Tu powinna byc dwojka  ?et{bbbbb;2}
+Tu powinna byc dwojka  2
+%Tu powinna byc trojka ?et{ccccc;3}
+Tu powinna byc trojka 3
+%Tu powinna byc czworka ?et{ddddd;4}
+Tu powinna byc czworka 4
+%Tu powinno byc 4a ?et{ddddd.a;5}
+Tu powinno byc 4a 4a
+%Tu powinno byc 4b ?et{ddddd.b;6}
+Tu powinno byc 4b 4b
+%Tu powinno byc 1a ?et{aaaaa.a;7}
+Tu powinno byc 1a 1a

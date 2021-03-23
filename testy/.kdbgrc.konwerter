@@ -1,0 +1,16 @@
+[Breakpoint 0]
+Enabled=true
+File=system_zapisu.cc
+Line=73
+Temporary=false
+
+[General]
+DebuggerCmdStr=
+FileVersion=1
+ProgramArgs=-if aaa.tex
+TTYLevel=7
+WorkingDirectory=
+
+[Memory]
+ColumnWidths=80,0
+NumExprs=0
